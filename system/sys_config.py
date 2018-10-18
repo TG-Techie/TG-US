@@ -3,4 +3,5 @@
 #Author: Jonah Yolles-Murphy on Date: 10/17/18
 
 
-launcher_path = 'system.programs.launcher'
+init_prog_path = 'system.programs'
+init_prog_name = 'launcher'

@@ -14,17 +14,19 @@ programs = []
 system = []
 
 # make accesing the current program esier by user (well coder)
-cur_prog = None
-cur_cont = None
+global cur_prog, cur_cont
+cur_prog = 7
+cur_cont = 7
 
 def load(name, path = 'programs', to_system = 0, err_func = None, err_tup = () ):
     try:
-        #try to import the given
-        exec('from '+path+' import ' + name)
+        #try to import if given name is not already loaded 
+        if name not in buffer:
+            exec('from '+path+' import ' + name)
+            #put into the all programs buffer
+            buffer[name] = eval(name)
         
-        #put into the all programs buffer
-        buffer[name] = eval(name)
-        
+        #ease of coding
         pointer = eval(name)
         
         # pick which list to add the add the module too 
@@ -32,16 +34,18 @@ def load(name, path = 'programs', to_system = 0, err_func = None, err_tup = () )
         
         #remove from list 
         try:
-            list_pointer.pop(progs.index(pointer))
+            list_pointer.pop(list_pointer.index(pointer))
         except ValueError:
            pass
+        
         #place at  back of list (the most recent prog spot) 
         list_pointer.append(pointer)
         
         #set the ease of use variables
+        global cur_prog, cur_cont
         cur_prog = buffer[name]
         cur_cont = cur_prog.container
-        
+        #print(cur_prog,cur_cont)
 
         '''try:
             all_progs.append( all_progs.pop( all_progs.index(pointer) ))
@@ -59,7 +63,7 @@ def load(name, path = 'programs', to_system = 0, err_func = None, err_tup = () )
             except ValueError:
                 index.append(pointer)'''
             
-        
+        return eval(name)
         
     except MemoryError:
         target = programs.pop(0)
