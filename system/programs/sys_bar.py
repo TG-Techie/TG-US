@@ -17,6 +17,9 @@ container = gui.window(x,y,width,height + line_height)
 
 panel = container.add_panel()
 
+#print(x,y,width,height)
+
 #add the text (across whole top bar) and the line to sepreate it
-panel.add(text = gui.text(x, y, width, height, 'kjasfkj',color = line_color))
+panel.add(text = gui.text(x, y, width, height, '1234567890123456789012345678901234567890',color = line_color))
+#print(panel.text.char_width)
 panel.add(line = gui.rect(x,height,width, line_height, line_color))

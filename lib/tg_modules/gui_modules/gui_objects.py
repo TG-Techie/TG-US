@@ -69,9 +69,12 @@ class text(valued):
         self.top_down = top_down
         self.clip_top = clip_top
         
-        dims = io.text_dimensions(0,0,' \n ', size)
-        self.char_width = dims[0] + 1
-        self.char_height = (dims[1] + 1)/2
+        #errors
+        #dims = io.text_dimensions(0,0,'   /n   ', size)
+        dims = (5*3*self.size + self.size*3 ,7*2*self.size + self.size*2)# temp error fix
+        self.char_width = int(dims[0]/3)
+        self.char_height = int(dims[1]/2)
+        #print(self.char_width, self.char_height)
         
         #set initial value as color
         self._value = ' '

@@ -14,4 +14,4 @@ system.add('sys_bar', handler.load('sys_bar', path  = 'system.programs', to_syst
 handler.cur_cont.place()
 
 
-time.sleep(7)
+time.sleep(3)
