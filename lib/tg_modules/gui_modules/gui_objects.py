@@ -150,7 +150,8 @@ class text(valued):
         self.active = 1
         
         #print(self.char_width,self.char_height, self.text_cols,self.text_rows)
-        io.rect(self.x,self.y,self.width,self.height, self._color)
+        if self.border:
+            io.rect(self.x,self.y,self.width,self.height, self._color)
         
         io.rect(self.x + self.border,self.y + self.border,
                 self.width - self.border*2, self.height - self.border*2, self.background)

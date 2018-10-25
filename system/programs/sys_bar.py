@@ -17,9 +17,16 @@ container = gui.window(x,y,width,height + line_height)
 
 panel = container.add_panel()
 
+def change_bar_text(bar_obj):
+    nextval = ''.join(random.choice(string.lowercase) for x in range(X))
+    print(nextval)
+    bar_obj.text = nextval
+
 #print(x,y,width,height)
 
 #add the text (across whole top bar) and the line to sepreate it
-panel.add(text = gui.text(x, y, width, height, '1234567890123456789012345678901234567890',color = line_color))
+panel.add(text = gui.text(x, y, width, height, '12345678901234567890123453',color = line_color))
 #print(panel.text.char_width)
 panel.add(line = gui.rect(x,height,width, line_height, line_color))
+
+panel.add(refresher = gui.operator(change_bar_text, ()))

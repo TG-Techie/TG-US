@@ -3,6 +3,7 @@
 #Author: Jonah Yolles-Murphy on Date: 10/12/18
 
 from tg_io import io_screen as io
+from tg_modules.gui_modules import __behavior as behave
 from time import monotonic
 
 
@@ -17,7 +18,7 @@ class gui_obj():
         self._gui_id = _last_id 
         #print(self._id)
     
-    def __init__(self,x,y,width,height, place = 1, color_clear = io.background_color):
+    def __init__(self,x,y,width,height, place = behave.should_place, color_clear = io.background_color):
         self._set_id() # YOU MUST DO THIS
         #save them to class instance 
         self.active = 0
@@ -44,7 +45,7 @@ class valued(gui_obj):
     is_refreshable = False
     
     
-    def __init__(self,x,y,width,height,value, place = 1, color_clear = io.background_color):
+    def __init__(self,x,y,width,height,value, place = behave.should_place, color_clear = io.background_color):
         self._set_id() # YOU MUST DO THIS
         self._value = value
         #save rest to the class instance as the same name
@@ -70,7 +71,7 @@ class selectable(gui_obj):
     is_navigable = False
     is_refreshable = False
     
-    def __init__(self,x,y,width,height,purpose_func = None,purpose_tup = (), place = 1, 
+    def __init__(self,x,y,width,height,purpose_func = None,purpose_tup = (), place = behave.should_place, 
                 color_clear = io.background_color):
         self._set_id() # YOU MUST DO THIS
         
@@ -135,7 +136,7 @@ class navigable(gui_obj):
     
     
     
-    def __init__(self,x,y,width,height, move_mode = (1,1), superior = None, place = 1, 
+    def __init__(self,x,y,width,height, move_mode = (1,1), superior = None, place = behave.should_place, 
                     color_clear = io.background_color):
         self._set_id() # YOU MUST DO THIS
         #save them to class instance  except MAKE SUPERIOR AN EMPTY NAVIGABLE
@@ -164,16 +165,21 @@ class navigable(gui_obj):
 
 
 
-'''class refreshable(gui_obj):
+class refreshable(gui_obj):
     has_value = False
     is_selectable = False
     is_navigable = False
     is_refreshable = True
     
-    def __init__(self,x,y,width,height, data_fetch_func, data_fetch_tup, place = 1, clear_color = io.background_color):
+    def __init__(self,x,y,width,height, data_fetch_func, data_fetch_tup, place = behave.should_place,
+        clear_color = io.background_color):
         self._set_id() # YOU MUST DO THIS
         #save inputs to class instance 
         self.active = 0
         if place:
             self.place()
-        pass'''
+        pass
+    
+    def refresh(self):
+        #update the parts of the on screen object that are not static,
+        pass

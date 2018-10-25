@@ -18,11 +18,13 @@ global cur_prog, cur_cont
 cur_prog = 7
 cur_cont = 7
 
-def load(name, path = 'programs', to_system = 0, err_func = None, err_tup = () ):
+def load(name, path = 'programs', to_system = 0, err_func = None, err_tup = (), place = 1):
     try:
         #try to import if given name is not already loaded 
         if name not in buffer:
+            #see if can be imported
             exec('from '+path+' import ' + name)
+            
             #put into the all programs buffer
             buffer[name] = eval(name)
         
@@ -41,27 +43,41 @@ def load(name, path = 'programs', to_system = 0, err_func = None, err_tup = () )
         #place at  back of list (the most recent prog spot) 
         list_pointer.append(pointer)
         
-        #set the ease of use variables
         global cur_prog, cur_cont
+        
+        # clear and close the current prog
+        try: 
+            if cur_prog in programs:
+                cur_cont.clear()
+        except: pass
+        
+        #save (not implemented)
+        try: cur_prog.save()
+        except: pass
+        
+        #set the ease of use variables
         cur_prog = buffer[name]
         cur_cont = cur_prog.container
         #print(cur_prog,cur_cont)
-
-        '''try:
-            all_progs.append( all_progs.pop( all_progs.index(pointer) ))
-        except ValueError:
-            all_progs.append(pointer)
         
-        if index and not system:
-            try:
-                loaded_progs.append( loaded_progs.pop( loaded_progs.index(pointer) ))
-            except ValueError:
-                loaded_progs.append(pointer)
-        elif system:
-            try:
-                index.append( index.pop( index.index(pointer) ))
-            except ValueError:
-                index.append(pointer)'''
+        if place:
+            cur_cont.place()
+        
+        '''try:
+                        all_progs.append( all_progs.pop( all_progs.index(pointer) ))
+                    except ValueError:
+                        all_progs.append(pointer)
+                    
+                    if index and not system:
+                        try:
+                            loaded_progs.append( loaded_progs.pop( loaded_progs.index(pointer) ))
+                        except ValueError:
+                            loaded_progs.append(pointer)
+                    elif system:
+                        try:
+                            index.append( index.pop( index.index(pointer) ))
+                        except ValueError:
+                            index.append(pointer)'''
             
         return eval(name)
         

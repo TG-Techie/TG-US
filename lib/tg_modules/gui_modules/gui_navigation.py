@@ -2,8 +2,7 @@
 #Attribution-NonCommercial 3.0 United States (CC BY-NC 3.0 US)
 #Author: Jonah Yolles-Murphy on Date: 10/12/18
 
-from tg_modules.gui_modules.gui_base import selectable,navigable,gui_obj, io
-from tg_modules.gui_modules import __behavior as behave
+from tg_modules.gui_modules.gui_base import selectable,navigable,gui_obj, io, behave
 import time
 
 #button assignments:
@@ -20,11 +19,14 @@ except:
         else:
             return 1
 
-def _button_error(but):
+def _button_error(but, message = 'Err'):
     io.if_rect(but.x,but.y,but.width,but.height,but.radius,io.red)
-    io.text(but.x+but.radius,but.y+but.radius,'Err', background = io.red)
+    io.text(but.x+but.radius,but.y+but.radius, message, background = io.red)
     time.sleep(1)
     but.place()
+
+def button_error(a,b = 'Err'):
+    _button_error(a,b)
 
 class button(selectable):
     def __init__(self,x,y,width,height,radius = 0, text = ' ', text_size = 1, purpose_func = None, purpose_tup = (),
@@ -308,6 +310,9 @@ class panel(gui_obj):
                     #print('is navigable: ',pointer.is_navigable)
                     if pointer.is_navigable:
                         self.nav = pointer
+                    
+                    try: pointer.superior = self
+                    except: pass
                     
                     return getattr(self, key)
                 else:

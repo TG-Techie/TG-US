@@ -21,6 +21,7 @@ def del_dict_value(dikt,target):
 class holder():
     def __init__(self):
         self.contents = []
+        self.key_dict = {}
         self.cur_iter = 0
 
     def __iter__(self):
@@ -36,9 +37,10 @@ class holder():
             
         
     
-    def add(self,name,prog):
-        setattr(self,name,prog)
+    def add(self,name,obj):
+        setattr(self,name,obj)
         self.contents.append(getattr(self,name))
+        self.key_dict[str(obj)] = name
         #print(self.contents)
     
     def delete(self,name):
@@ -46,7 +48,13 @@ class holder():
         delattr(self,name)
         
     def get(self,target):
-        return getattr(self,target)
+        if type(target) == str:
+            return getattr(self,target)
+        else:
+            #try:
+            return self.key_dict[str(target)]
+            #except:
+            #    return
     
     def __iter__(self):
         return self
