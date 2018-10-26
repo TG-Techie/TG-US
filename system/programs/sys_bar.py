@@ -4,6 +4,7 @@
 
 from tg_modules import tg_gui as gui
 from system import gui_params as params
+import random, time
 
 x = params.sys_bar_pos[0]
 y = params.sys_bar_pos[1]
@@ -18,15 +19,23 @@ container = gui.window(x,y,width,height + line_height)
 panel = container.add_panel()
 
 def change_bar_text(bar_obj):
-    nextval = ''.join(random.choice(string.lowercase) for x in range(X))
-    print(nextval)
-    bar_obj.text = nextval
+    nextval = ''.join(random.choice('qwertyuiopasdfghjklzxcvbnm1234567890') for x in range(26))
+    #print(nextval)
+    bar_obj.value = nextval
 
 #print(x,y,width,height)
 
 #add the text (across whole top bar) and the line to sepreate it
-panel.add(text = gui.text(x, y, width, height, '12345678901234567890123453',color = line_color))
+panel.add(text = gui.text(x, y, width, height, '123 this is 26 long 123453',color = line_color))
 #print(panel.text.char_width)
 panel.add(line = gui.rect(x,height,width, line_height, line_color))
 
-panel.add(refresher = gui.operator(change_bar_text, ()))
+panel.add(refer = gui.operator(change_bar_text, (panel.text,)  ))
+
+#panel.place()
+#change_bar_text(panel.text)
+#print(panel.contents)
+#time.sleep(.5)
+#panel.refer.refresh()
+#panel.refresh()
+#time.sleep(7)

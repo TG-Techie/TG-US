@@ -81,12 +81,12 @@ class text(valued):
         self._color = color
         
         #define possbile cols and chars of text
-        self.textx = self.x + self.border
-        self.texty = self.y + self.border
+        self._textx = self.x + self.border
+        self._texty = self.y + self.border
         
-        self.text_cols = floor((self.width - self.border*2 - 1)/self.char_width)
-        self.text_rows = floor((self.height - self.border*2 -1 )/self.char_height) -1
-        #print(self.text_cols)
+        self._text_cols = floor((self.width - self.border*2 - 1)/self.char_width)
+        self._text_rows = floor((self.height - self.border*2 -1 )/self.char_height) -1
+        #print(self._text_cols)
         
         # configureing value
         self.value = value
@@ -110,14 +110,14 @@ class text(valued):
             if not self.top_down:
                 valin = valin[-1::]
             
-            valin = valin[0:self.text_rows + 1]
+            valin = valin[0:self._text_rows + 1]
             
             # break into lines by enter and add as list components 
             nextval = []
             for line in valin:
                 #valin.index(line)
                 #print(line)
-                nextval.append(line[0:self.text_cols])
+                nextval.append(line[0:self._text_cols])
             #print(nextval)
             
             valout = ''
@@ -149,7 +149,7 @@ class text(valued):
     def place(self):
         self.active = 1
         
-        #print(self.char_width,self.char_height, self.text_cols,self.text_rows)
+        #print(self.char_width,self.char_height, self._text_cols,self._text_rows)
         if self.border:
             io.rect(self.x,self.y,self.width,self.height, self._color)
         

@@ -9,4 +9,4 @@ init_prog_name = 'launcher'
 #show it in the app loaded apps
 init_prog_index = False
 
-system_refresh_interval = 6
+system_refresh_interval = 3

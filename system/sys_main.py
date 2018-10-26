@@ -3,8 +3,10 @@
 #Author: Jonah Yolles-Murphy on Date: 10/17/18
 
 #harware specific or user specific boot
+import gc
+
 try:
-    from boot import *
+    from programs.__boot import *
 except:
     pass
 
@@ -23,9 +25,14 @@ from system import sys_config, handler
 #for ease of code / system container
 system = holder()
 
+#print(gc.mem_free())
+
 #initial sys_bar setup
-system.add('sys_bar', handler.load('sys_bar', path  = 'system.programs', to_system = True))
+system.add('sys_bar', 
+                    handler.load('sys_bar', path  = 'system.programs', to_system = True))
 #handler.cur_cont.place()
+
+
 
 system.add( sys_config.init_prog_name, handler.load( sys_config.init_prog_name, 
                                                     sys_config.init_prog_path, 
@@ -36,6 +43,8 @@ while 1:
     if time.monotonic() - last_sys_refresh >= sys_config.system_refresh_interval:
         for process in system:
             process.container.refresh()
+        last_sys_refresh = time.monotonic()
+
     time.sleep(.1)
     #print(time.monotonic())
     #time.sleep(1 - (.0001))

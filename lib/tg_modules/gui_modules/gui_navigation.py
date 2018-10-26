@@ -469,3 +469,9 @@ class window(gui_obj):
             next_pos = max(0, min(next_pos, len(self.index)-1) )
         #print('win side move',next_pos)
         self.switch(next_pos)
+    
+    def refresh(self):
+        try:
+            self.current.refresh()
+        except:
+            pass
