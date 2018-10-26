@@ -1,4 +1,11 @@
-from system.programs.__blank__app import *
+#released under:
+#Attribution-NonCommercial 3.0 United States (CC BY-NC 3.0 US)
+#Author: Jonah Yolles-Murphy on Date: 10/26/18
+
+#from system.programs.__blank__app import *
+from system.programs.__blank__app import init
+exec(init)
+
 
 from os import listdir
 from system import gui_params as params
@@ -51,7 +58,7 @@ for page_num in range(num_pages):
             #print(prog_name.replace('__', '\n'))
             #handler.load(prog_name)
             but.text = prog_name.replace('__', '\n')
-            #but.set_purpose(handler.load, (prog_name,))
+            but.set_purpose(handler.load, (prog_name,))
         except:
             but.set_purpose(gui.button_error,(but,'No\nProg'))
             

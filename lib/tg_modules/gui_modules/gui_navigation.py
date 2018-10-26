@@ -244,7 +244,7 @@ class nidos(navigable):
                 #self.superior.move(chgx,chgy)
             except:
                 pass 
-        else:
+        for i in (1,):
             self.switch((nextx) % self.cols, (nexty) % self.rows) 
                 
             del nextx, nexty, chgx, chgy

@@ -20,16 +20,20 @@ cur_cont = 7
 
 def load(name, path = 'programs', to_system = 0, err_func = None, err_tup = (), place = 1):
     try:
+        #print('atmpt load: ', name)
         #try to import if given name is not already loaded 
         if name not in buffer:
+            #print("it wasn't in buffer", buffer, '\n')
             #see if can be imported
             exec('from '+path+' import ' + name)
             
             #put into the all programs buffer
             buffer[name] = eval(name)
+            #print('added to buffer', buffer, '\n')
         
         #ease of coding
         pointer = eval(name)
+        #print(pointer, '\n')
         
         # pick which list to add the add the module too 
         list_pointer = (programs, system)[int(bool(to_system))]
@@ -46,7 +50,8 @@ def load(name, path = 'programs', to_system = 0, err_func = None, err_tup = (), 
         global cur_prog, cur_cont
         
         # clear and close the current prog
-        try: 
+        try: # if loading a program that is already present dont 
+                #replaceit else clear the current program
             if cur_prog in programs:
                 cur_cont.clear()
         except: pass
@@ -55,13 +60,23 @@ def load(name, path = 'programs', to_system = 0, err_func = None, err_tup = (), 
         try: cur_prog.save()
         except: pass
         
+        #print(name, buffer[name],buffer[name].container)
+        
+        #print(cur_prog, cur_cont)
+        
         #set the ease of use variables
+        cur_cont = buffer[name].container
         cur_prog = buffer[name]
+        
+        #print(cur_prog, cur_cont)
+        
         cur_cont = cur_prog.container
         #print(cur_prog,cur_cont)
+        #print(cur_prog, cur_cont)
         
-        if place:
-            cur_cont.place()
+        #if place:
+        cur_cont.place()
+        #time.sleep(2)
         
         '''try:
                         all_progs.append( all_progs.pop( all_progs.index(pointer) ))
@@ -86,7 +101,7 @@ def load(name, path = 'programs', to_system = 0, err_func = None, err_tup = (), 
         del_dict_value(buffer,target)
         load(name, path = path, to_system = to_system, err_func = err_func,
                 err_tup = err_tup)
-    """except ImportError:
+        """except ImportError:
         if err_func:
             err_func(*err_tup)
         else:
