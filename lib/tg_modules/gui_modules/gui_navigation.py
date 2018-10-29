@@ -354,7 +354,8 @@ class panel(gui_obj):
                 try:
                     tup_pointer = self.cmd_dict[cur_val]
                     tup_pointer[0](*tup_pointer[1])
-                except: raise KeyError("TG: either nav has no superior or given command has not assigned function")
+                except: pass
+                #except: raise KeyError("TG: either nav has no superior or given command has not assigned function")
                 
     #def add_cmd():
     

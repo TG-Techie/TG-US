@@ -116,7 +116,7 @@ class Display: #pylint: disable-msg=no-member
 
     def _decode_pixel(self, data):
         """Decode bytes into a pixel color."""
-        return color565(*struct.unpack(self._DECODE_PIXEL, data))
+        return colorst(*struct.unpack(self._DECODE_PIXEL, data))
         del data
         clean_mem()
 

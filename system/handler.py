@@ -2,7 +2,8 @@
 #Attribution-NonCommercial 3.0 United States (CC BY-NC 3.0 US)
 #Author: Jonah Yolles-Murphy on Date: 10/17/18
 
-#for errors, not currently implemented#from tg_io import io_screen as io # for error programs\
+#for errors, not currently implemented#from tg_io import io_screen as io # for error programs
+from system import sys_config
 from tg_modules.tg_tools import del_dict_value
 import time 
 
@@ -18,8 +19,9 @@ global cur_prog, cur_cont
 cur_prog = 7
 cur_cont = 7
 
-def load(name, path = 'programs', to_system = 0, err_func = None, err_tup = (), place = 1):
+def load(name, path = sys_config.std_path, to_system = 0, err_func = None, err_tup = (), place = 1):
     try:
+        print(name)
         #print('atmpt load: ', name)
         #try to import if given name is not already loaded 
         if name not in buffer:

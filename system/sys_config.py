@@ -2,6 +2,7 @@
 #Attribution-NonCommercial 3.0 United States (CC BY-NC 3.0 US)
 #Author: Jonah Yolles-Murphy on Date: 10/17/18
 
+std_path = 'programs'
 
 init_prog_path = 'system.programs'
 init_prog_name = 'launcher'
@@ -15,4 +16,4 @@ init_prog_index = False
 
 system_refresh_interval = 2
 
-use_keyboard = 1
+use_keyboard = 0

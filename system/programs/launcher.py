@@ -6,7 +6,6 @@
 from system.programs.__blank__app import init
 exec(init)
 
-
 from os import listdir
 from system import gui_params as params
 from system import handler

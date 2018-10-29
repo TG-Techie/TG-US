@@ -20,4 +20,4 @@ wants_refresh = params.wants_refresh
 container = gui.window(cont_x, cont_y, cont_width, cont_height, move_loop = params.move_loop,
                     color_clear = params.prog_color_clear, background = params.prog_background)
 
-print(dir())"""
+#print(dir())"""
