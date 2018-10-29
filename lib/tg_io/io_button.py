@@ -9,19 +9,29 @@ try: from tg_io.staging.touch_brd0 import cap1
 except: pass
 
 #hardware specific code
-cap0_num2cmd_dict = {0 : '<', 1:'E', 2:'>'}
+cap0_num2cmd_dict = {0 : '<', 1:'E', 2:'>', 3:'H'}
 
 def get_commands():
     #returning a list of cmds
     out_list = []
     
     #this is harware specific code too
-    for pos in range(12):
+    data = cap0.touched()
+    #print(bin(data))
+    for shifter in range(12):
+        if 1<<shifter & data:
+            try:
+                out_list.append(cap0_num2cmd_dict[shifter])
+            except: pass
+            
+    
+    
+    '''for pos in range(12):
         if cap0[pos].value:
             try:
                out_list.append(cap0_num2cmd_dict[pos])
             except KeyError:
-                pass
+                pass'''
     
     #print(out_list)
     return out_list

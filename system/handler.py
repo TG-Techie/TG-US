@@ -21,7 +21,7 @@ cur_cont = 7
 
 def load(name, path = sys_config.std_path, to_system = 0, err_func = None, err_tup = (), place = 1):
     try:
-        print(name)
+        #print(name)
         #print('atmpt load: ', name)
         #try to import if given name is not already loaded 
         if name not in buffer:
@@ -52,11 +52,10 @@ def load(name, path = sys_config.std_path, to_system = 0, err_func = None, err_t
         global cur_prog, cur_cont
         
         # clear and close the current prog
-        try: # if loading a program that is already present dont 
-                #replaceit else clear the current program
-            if cur_prog in programs:
-                cur_cont.clear()
-        except: pass
+        # if loading a program that is already present dont 
+        #replaceit else clear the current program
+        if pointer == cur_prog:
+            return pointer
         
         #save (not implemented)
         try: cur_prog.save()

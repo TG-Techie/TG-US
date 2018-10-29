@@ -24,6 +24,7 @@ from tg_io import io_button as button
 
 #ram handler and config of behavior
 from system import sys_config, handler
+init_prog = sys_config.init_prog_name
 
 #for ease of code / system container
 system = holder()
@@ -36,7 +37,7 @@ system.add('sys_bar',
 
 ###THE launcher####################################################################################
 #import the inti program (usually launcher to the )
-system.add( sys_config.init_prog_name, handler.load( sys_config.init_prog_name, 
+system.add( init_prog, handler.load( sys_config.init_prog_name, 
                                                     sys_config.init_prog_path, 
                                                     not sys_config.init_prog_index))
 
@@ -61,7 +62,7 @@ while 1:
             print(cmd)
             try:
                 if cmd == 'h':
-                    handler.load('launcher')
+                    handler.load(init_prog)
                 try:
                     cmd_list.append({'w':'^', 'a':'<', 's':'V', 'd':'>', 'e':'E'}[cmd[0]])
                 except:
@@ -73,11 +74,14 @@ while 1:
     #get cap touched buttons
     cmd_list += button.get_commands()
     
-    
     print(cmd_list)
+    #print(cmd_list)
     for cmd in cmd_list:
+        if cmd == 'H':
+            handler.load(init_prog)
         handler.cur_cont.current.command(cmd)
     
+   
     time.sleep(.05)
     
     

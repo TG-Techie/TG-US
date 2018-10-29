@@ -1,2 +1,2 @@
 from system.programs.__blank__app import *
-print('imported')
+print('tester program imported')

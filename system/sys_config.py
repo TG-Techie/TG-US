@@ -14,6 +14,6 @@ init_prog_name = 'launcher'
 #show it in the app loaded apps
 init_prog_index = False
 
-system_refresh_interval = 2
+system_refresh_interval = 30
 
 use_keyboard = 0
