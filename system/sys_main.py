@@ -67,7 +67,7 @@ while 1:
     if sys_config.use_keyboard:
         valin = str(input('your cmd(wasd):')).lower()
         for cmd in valin:
-            print(cmd)
+            #print(cmd)
             try:
                 if cmd == 'h':
                     handler.load(init_prog)
@@ -93,6 +93,7 @@ while 1:
                 handler.load(init_prog)
             
         handler.cur_cont.current.command(cmd)
+        if sys_config.use_keyboard: print(cmd)
     
     del cmd_list
     gc.collect()
