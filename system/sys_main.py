@@ -5,6 +5,7 @@
 #############IMPORTS###############################################################################
 #harware specific or user specific boot
 import gc
+gc.enable()
 
 #try:
 from programs.__boot import *
@@ -46,6 +47,9 @@ system.add( init_prog, handler.load( sys_config.init_prog_name,
 
 last_sys_refresh = time.monotonic()
 while 1:
+    #print(gc.mem_free())
+    gc.collect()
+    #print(gc.mem_free())
     #print(time.monotonic())
     #print(time.monotonic() - last_sys_refresh)
     time.sleep(.1)
@@ -90,7 +94,8 @@ while 1:
             
         handler.cur_cont.current.command(cmd)
     
-   
+    del cmd_list
+    gc.collect()
     #time.sleep(.05)
     
     

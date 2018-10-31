@@ -4,8 +4,8 @@
 
 #for errors, not currently implemented#from tg_io import io_screen as io # for error programs
 from system import sys_config
-from tg_modules.tg_tools import del_dict_value
-import time 
+from tg_modules.tg_tools import del_dict_value #ease of life thing
+import gc,time
 
 #all programs by key
 buffer = {}
@@ -20,6 +20,9 @@ cur_prog = 7
 cur_cont = 7
 
 def load(name, path = sys_config.std_path, to_system = 0, err_func = None, err_tup = (), place = 1, _raise = 0):
+    while (len(buffer) >8) and not _raise:
+        unload(_get_name(programs[0]))
+        
     try:
         if _raise:
             raise MemoryError()
@@ -29,7 +32,9 @@ def load(name, path = sys_config.std_path, to_system = 0, err_func = None, err_t
         if name not in buffer:
             #print("it wasn't in buffer", buffer, '\n')
             #see if can be imported
-            exec('from '+path+' import ' + name)
+            try: exec('from '+path+' import ' + name)
+            except: exec('from '+'programs'+' import ' + name)
+    
             
             #put into the all programs buffer
             buffer[name] = eval(name)
@@ -81,47 +86,30 @@ def load(name, path = sys_config.std_path, to_system = 0, err_func = None, err_t
         cur_cont.place()
         #time.sleep(2)
         
-        '''try:
-                        all_progs.append( all_progs.pop( all_progs.index(pointer) ))
-                    except ValueError:
-                        all_progs.append(pointer)
-                    
-                    if index and not system:
-                        try:
-                            loaded_progs.append( loaded_progs.pop( loaded_progs.index(pointer) ))
-                        except ValueError:
-                            loaded_progs.append(pointer)
-                    elif system:
-                        try:
-                            index.append( index.pop( index.index(pointer) ))
-                        except ValueError:
-                            index.append(pointer)'''
-            
+        gc.collect()
         return eval(name)
         
     except MemoryError:
         target = programs.pop(0)
         del_dict_value(buffer,target)
+        
+        try: exec('del ')
+        except: pass
+        
         if not _raise:
             load(name, path = path, to_system = to_system, err_func = err_func,
                 err_tup = err_tup)
-        """except ImportError:
-        if err_func:
-            err_func(*err_tup)
-        else:
-            #raise the initial error (debugging purposes)
-            exec('from '+path+' import ' + name) 
-    except:
-        #eventually implement an on screen error thing
-        if err_func:
-            err_func(*err_tup)
-        else:
-            exec('from '+path+' import ' + name) 
-        '''io.text(cur_cont.cont_x,cur_cont.cont_y,'program load error', color = io.white,
-                        background = io.red)
-        
-        time.sleep(.5)
-        cur_cont.place()'''"""
+        gc.collect()
+    gc.collect()
             
-def unload(x = 7):
-    load('x', _raise = 1)
+def unload(name = None ):
+    load(name , _raise = 1)
+
+def _get_name(module):
+    for key in buffer:
+        if buffer[key] == module:
+            return key
+    raise KeyError('TG: Program not loaded')
+
+def loaded_apps():
+    pass

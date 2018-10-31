@@ -424,17 +424,7 @@ class window(gui_obj):
             self.current = getattr(self,panel_name)
         
         return (getattr(self,panel_name))
-        
-    '''@property
-    def current(self):
-        return self._current'''
     
-    '''@current.setter
-    def  current(self, val):
-        
-        #if the item to switch to was given find it's position in th contents and add
-        if type(val) != int:
-            val = self.contents.index(val)'''
     def switch(self, valin):
         #print(type(valin))
         if type(valin) == int:

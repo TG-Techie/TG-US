@@ -26,14 +26,7 @@ def get_commands():
                 out_list.append(cap0_num2cmd_dict[shifter])
             except: pass
     
-    
-    '''for pos in range(12):
-        if cap0[pos].value:
-            try:
-               out_list.append(cap0_num2cmd_dict[pos])
-            except KeyError:
-                pass'''
-    
     #print(out_list)
+    del data
     return out_list
             
