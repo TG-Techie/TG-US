@@ -1,6 +1,8 @@
 ##from system.programs.__blank__app import *
 from system.programs.__blank__app import init
 exec(init)
+#print(dir())
+wants_refresh = 0
 
 page = container.add_panel()
 

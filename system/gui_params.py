@@ -26,4 +26,4 @@ prog_color_clear = io.background_color
 prog_background = io.background_color
 
 #this tells the program handler if the program wants refreshing in blank app
-wants_refresh = True
+wants_refresh = False

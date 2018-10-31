@@ -1,9 +1,10 @@
 #released under:
 #Attribution-NonCommercial 3.0 United States (CC BY-NC 3.0 US)
 #Author: Jonah Yolles-Murphy on Date: 10/28/18
-
+import time
 try: from tg_io.staging.touch_brd0 import cap0
 except: pass
+cap0.reset()
 
 try: from tg_io.staging.touch_brd0 import cap1
 except: pass
@@ -16,6 +17,7 @@ def get_commands():
     out_list = []
     
     #this is harware specific code too
+    time.sleep(.05)
     data = cap0.touched()
     #print(bin(data))
     for shifter in range(12):
@@ -23,7 +25,6 @@ def get_commands():
             try:
                 out_list.append(cap0_num2cmd_dict[shifter])
             except: pass
-            
     
     
     '''for pos in range(12):

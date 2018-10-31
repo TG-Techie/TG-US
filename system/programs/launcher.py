@@ -5,10 +5,11 @@
 #from system.programs.__blank__app import *
 from system.programs.__blank__app import init
 exec(init)
+wants_refresh = 0
 
 from os import listdir
 from system import gui_params as params
-from system import handler
+from system import handler, sys_config
 from math import ceil
 import time
 
@@ -31,7 +32,20 @@ menu_height = cont_height - 1 - label_height
 
 
 #list of progs
-prog_list = listdir('./programs')
+prog_list = listdir('./' + sys_config.prog_path.replace('.','/'))
+#print(prog_list)
+for prog in prog_list.copy():
+    #print(prog, prog[0:2])
+    #boolean
+    should_exclude = 0
+    
+    #check if is set aside for something else  or is hidden file (by os)
+    should_exclude += prog[0:2] == ('__' or '._')
+    
+    if should_exclude:
+        prog_list.pop(prog_list.index(prog))
+#print(prog_list)
+
 
 #find num pages
 num_pages = ceil(len(prog_list)/(params.launch_cols* params.launch_rows))

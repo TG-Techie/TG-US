@@ -41,10 +41,12 @@ system.add( init_prog, handler.load( sys_config.init_prog_name,
                                                     sys_config.init_prog_path, 
                                                     not sys_config.init_prog_index))
 
+
 ###THE LOOP########################################################################################
 
 last_sys_refresh = time.monotonic()
 while 1:
+    #print(time.monotonic())
     #print(time.monotonic() - last_sys_refresh)
     time.sleep(.1)
     if time.monotonic() - last_sys_refresh >= sys_config.system_refresh_interval:
@@ -52,7 +54,9 @@ while 1:
             process.container.refresh()
         last_sys_refresh = time.monotonic()
     
-    handler.cur_cont.refresh()
+    if handler.cur_prog.wants_refresh:
+        #print('moop')
+        handler.cur_cont.refresh()
     
     cmd_list = []
     
@@ -74,14 +78,19 @@ while 1:
     #get cap touched buttons
     cmd_list += button.get_commands()
     
-    print(cmd_list)
+    #print(cmd_list)
     #print(cmd_list)
     for cmd in cmd_list:
         if cmd == 'H':
-            handler.load(init_prog)
+            if handler.cur_prog == system.get(init_prog):
+                pass # open app switcher
+                #print('smap')
+            else:
+                handler.load(init_prog)
+            
         handler.cur_cont.current.command(cmd)
     
    
-    time.sleep(.05)
+    #time.sleep(.05)
     
     

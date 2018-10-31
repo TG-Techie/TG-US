@@ -19,8 +19,10 @@ global cur_prog, cur_cont
 cur_prog = 7
 cur_cont = 7
 
-def load(name, path = sys_config.std_path, to_system = 0, err_func = None, err_tup = (), place = 1):
+def load(name, path = sys_config.std_path, to_system = 0, err_func = None, err_tup = (), place = 1, _raise = 0):
     try:
+        if _raise:
+            raise MemoryError()
         #print(name)
         #print('atmpt load: ', name)
         #try to import if given name is not already loaded 
@@ -100,7 +102,8 @@ def load(name, path = sys_config.std_path, to_system = 0, err_func = None, err_t
     except MemoryError:
         target = programs.pop(0)
         del_dict_value(buffer,target)
-        load(name, path = path, to_system = to_system, err_func = err_func,
+        if not _raise:
+            load(name, path = path, to_system = to_system, err_func = err_func,
                 err_tup = err_tup)
         """except ImportError:
         if err_func:
@@ -120,4 +123,5 @@ def load(name, path = sys_config.std_path, to_system = 0, err_func = None, err_t
         time.sleep(.5)
         cur_cont.place()'''"""
             
-            
+def unload(x = 7):
+    load('x', _raise = 1)

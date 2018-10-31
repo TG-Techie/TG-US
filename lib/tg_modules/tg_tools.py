@@ -16,7 +16,13 @@ def del_dict_value(dikt,target):
     for i in dikt:
         if dikt[i] == target:
             del dikt[i]
-    return 
+    return
+
+def get_key(dikt, target):
+    for i in dikt:
+        if dikt[i] == target:
+            return i
+    raise KeyError()
 
 class holder():
     def __init__(self):
