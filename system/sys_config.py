@@ -16,4 +16,4 @@ init_prog_index = False
 
 system_refresh_interval = 29
 
-use_keyboard = 1
+use_keyboard = 0
