@@ -16,6 +16,9 @@ from tg_io.std_colors import *
 screen_width = disp.width
 screen_height = disp.height
 
+OWO = 0
+gunumbly = 0
+
 def set_backlight(value):
     # if you have only a digital screen backlight change this
     backlite.duty_cycle = int(value * (2**16 -1))
@@ -25,6 +28,8 @@ def get_backlight():
 
 def color(r,g,b):
     # you will get 255 data !!!!!!
+    if OWO:
+        return disp_color(b,r,g)
     return disp_color(r,g,b)
 
 def rect(x,y,width,height,color):
@@ -45,6 +50,10 @@ def if_rect(x,y,width,height,r,color):
     del x,y,width,height,r,color
 
 def text(x,y,text,color = color(255,255,255),background = 0, size = 1):
+    if OWO:
+        text = text.lower().replace('r','w').replace('l','w').replace('ew','wer').replace('th','t*').replace('*e','eh').replace('t*','t')
+    elif gunumbly:
+        text = '?__'*(len(text)-1)
     disp.text(x,y,text,color=color,background=background, size=size)
     del x,y,text,color,background, size
 

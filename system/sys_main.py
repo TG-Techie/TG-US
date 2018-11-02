@@ -88,7 +88,7 @@ while 1:
                     cmd_list.append({'w':'^', 'a':'<', 's':'V', 'd':'>', 'e':'E'}[cmd[0]])
                 except:
                     cmd_list.append(cmd[0])
-                time.sleep(.2)
+                #time.sleep(.2)
             except:
                 print('err')
     

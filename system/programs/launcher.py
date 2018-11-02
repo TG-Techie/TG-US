@@ -65,7 +65,7 @@ for page_num in range(num_pages):
     #print('the given object:')
     #print((container._gui_id))
     pan_pointer.add( menu = gui.nidos(menu_x, menu_y, menu_width, menu_height,
-                                params.launch_cols, params.launch_rows, container)) 
+                                params.launch_cols, params.launch_rows, container, 0)) 
     #print(pan_pointer.menu.superior._gui_id)
     
     #time.sleep(3)

@@ -19,9 +19,13 @@ except:
         else:
             return 1
 
-def _button_error(but, message = 'Err'):
+def _button_error(but, message = None):
+    if message == None:
+        message = but.error_message
+    
     io.if_rect(but.x,but.y,but.width,but.height,but.radius,io.red)
     io.text(but.x+but.radius,but.y+but.radius, message, background = io.red)
+    
     time.sleep(1)
     but.place()
 
@@ -67,6 +71,8 @@ class button(selectable):
         
         self.selected = 0
         self.active = 0
+        
+        self.error_message = 'Err'
         
         if place:
             self.place()
@@ -266,9 +272,9 @@ class nidos(navigable):
             pointer = self.of(*self.selected)
             if animate:
                 pointer.place( selected = True, active = pointer.active)
-                time.sleep(.075)
+                #time.sleep(.075 * bool(pointer.radius >2) )
                 pointer.place( selected = False, active = pointer.active)
-                time.sleep(.075)
+                #time.sleep(.075 * bool(pointer.radius >2) )
                 pointer.place( selected = True, active = pointer.active)
             pointer.press()
 
@@ -465,7 +471,7 @@ class window(gui_obj):
             #self.place()
         
     def move(self,direction):
-        print('superior recieved move command')
+        #print('superior recieved move command')
         next_pos = self._cur_pos + get_direction(direction)
         
         if self.move_loop:
