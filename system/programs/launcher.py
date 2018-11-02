@@ -5,6 +5,7 @@
 #from system.programs.__blank__app import *
 from system.programs.__blank__app import init
 exec(init)
+#print(container._gui_id)
 wants_refresh = 0
 
 from os import listdir
@@ -52,6 +53,8 @@ num_pages = ceil(len(prog_list)/(params.launch_cols* params.launch_rows))
 
 next_prog = 0
 
+#num_pages += 1
+
 for page_num in range(num_pages):
     pan_pointer = container.add_panel('page' + str(page_num))
     
@@ -59,8 +62,11 @@ for page_num in range(num_pages):
                     label_height, 'Page:' + str(page_num + 1) + '/' + str(num_pages),
                     border = label_border))
     
+    #print('the given object:')
+    #print((container._gui_id))
     pan_pointer.add( menu = gui.nidos(menu_x, menu_y, menu_width, menu_height,
-                                params.launch_cols, params.launch_rows)) 
+                                params.launch_cols, params.launch_rows, container)) 
+    #print(pan_pointer.menu.superior._gui_id)
     
     #time.sleep(3)
     #container.place()
@@ -70,7 +76,7 @@ for page_num in range(num_pages):
             next_prog += 1
             #print(prog_name.replace('__', '\n'))
             #handler.load(prog_name)
-            but.text = prog_name.replace('__', '\n')
+            but.text = prog_name.replace('_ENT', '\n').replace("_SPC",' ')
             but.set_purpose(handler.load, (prog_name,))
         except:
             but.set_purpose(gui.button_error,(but,'No\nProg'))

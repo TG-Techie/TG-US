@@ -119,11 +119,13 @@ class button(selectable):
         if self.active:
             self.place()
 
+blank_nidos_superior = navigable(0,0,0,0,place = 0)
 class nidos(navigable):
     "move_mode variable input: (1,1) = move in x & y, (1,0) = move in x, (0,1) = move in y"
     
-    def __init__(self, x,y,width,height,cols,rows,radius = 0, move_mode = (1,1), superior = navigable(0,0,0,0,place = 0),
-                    x_gap = 3, y_gap = 3,
+    def __init__(self, x,y,width,height,cols,rows,
+                    superior = blank_nidos_superior,
+                    radius = 0,   move_mode = (1,1), x_gap = 3, y_gap = 3,
                     place = behave.should_place, select = 1,
                     color_clear = io.background_color,
                     background = io.background_color,
@@ -160,6 +162,7 @@ class nidos(navigable):
         self.superior = superior
         #else:
             #self.superior = navigable(0,0,0,0)
+        #print(superior, self.superior)
         
         #list containing buttons
         self.contents = []
@@ -235,19 +238,28 @@ class nidos(navigable):
         
         #if chgx*self.move_mode[0] or chgy*self.move_mode[1]:
         #print(not(0 <= nextx < self.cols) and not(0 <= nexty < self.rows))
-        if not(0 <= nextx < self.cols) and not(0 <= nexty < self.rows) and (chgx + chgy):
-            try:
-                (self.superior.move(chgx + chgy))
-                #(self.superior.move(chgx*self.move_mode[0] + chgy*self.move_mode[1]))
-                    
-                #self.superior.move(get_direction(sup_dir) * bool(abs(sup_dir) == (self.selected[0] + self.selected[1] )))
-                #self.superior.move(chgx,chgy)
-            except:
-                pass 
-        for i in (1,):
-            self.switch((nextx) % self.cols, (nexty) % self.rows) 
+        #print(not(0 <= nextx < self.cols) and not(0 <= nexty < self.rows) and (chgx + chgy))
+        #print(chgx + chgy)
+        #print('---')
+        #self.superior.move(1)
+        if (blank_nidos_superior != self.superior):
+            if not(0 <= nextx < self.cols) and not(0 <= nexty < self.rows) and (chgx + chgy):
+                try:
+                    #print('moving superior')
+                    #print((self.superior._gui_id))
+                    self.superior.move(chgx + chgy)
+                    #(self.superior.move(chgx*self.move_mode[0] + chgy*self.move_mode[1]))
+                        
+                    #self.superior.move(get_direction(sup_dir) * bool(abs(sup_dir) == (self.selected[0] + self.selected[1] )))
+                    #self.superior.move(chgx,chgy)
+                except:
+                    pass 
+            
+            #for i in (1,):
+            else: #blank_nidos_superior != self.superior:
+                self.switch((nextx) % self.cols, (nexty) % self.rows) 
                 
-            del nextx, nexty, chgx, chgy
+        del nextx, nexty, chgx, chgy
     
     def press(self, animate = 1):
         if self.active:
@@ -311,8 +323,8 @@ class panel(gui_obj):
                     if pointer.is_navigable:
                         self.nav = pointer
                     
-                    try: pointer.superior = self
-                    except: pass
+                    '''try: pointer.superior = self
+                    except: pass'''
                     
                     return getattr(self, key)
                 else:
@@ -337,7 +349,7 @@ class panel(gui_obj):
     def nav(self,val, overwite_move = None):
         if val in self.contents:
             self._nav = val
-            if overwite_move == None:
+            if overwite_move == None: # why?
                 overwite_move = self.overwite_move
             if overwite_move:
                 self.cmd_dict['<'] = (self.nav.move , (-1,0))
@@ -346,7 +358,7 @@ class panel(gui_obj):
                 self.cmd_dict['V'] = (self.nav.move , (0,1))
                 self.cmd_dict['E'] = (self.nav.press ,())
         else:
-            raise TypeError("TG: tried to set panel's nav to object not already in panel")
+            raise TypeError("TG: tried to set panel's nav to object not already in panel, object must be in panel")
     
     def command(self,*args):
         if self.active:
@@ -399,8 +411,9 @@ class window(gui_obj):
         
         io.rect( self.x, self.y, self.width, self.height, self.color_clear)
         
-    def add_panel(self, name = None ,index = 1):
+    def add_panel(self, name = None ,should_index = 1):
         
+        index = should_index
         #find internal panel number
         panel_num = len(self.contents)
         #name the std name
@@ -452,6 +465,7 @@ class window(gui_obj):
             #self.place()
         
     def move(self,direction):
+        print('superior recieved move command')
         next_pos = self._cur_pos + get_direction(direction)
         
         if self.move_loop:

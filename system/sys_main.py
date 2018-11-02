@@ -6,26 +6,34 @@
 #harware specific or user specific boot
 import gc
 gc.enable()
+gc.collect()
 
 #try:
 from programs.__boot import *
+gc.collect()
 #except:
 #    pass
 
 
 # system boor (rtc and other stuff)
 from system.boot import *
+gc.collect()
 
 #utilities
 from tg_modules.tg_tools import holder
 import time
+gc.collect()
 
 #io
 from tg_io import io_button as button
+gc.collect()
+
 
 #ram handler and config of behavior
 from system import sys_config, handler
 init_prog = sys_config.init_prog_name
+gc.collect()
+
 
 #for ease of code / system container
 system = holder()
@@ -44,7 +52,7 @@ system.add( init_prog, handler.load( sys_config.init_prog_name,
 
 
 ###THE LOOP########################################################################################
-
+gc.collect()
 last_sys_refresh = time.monotonic()
 while 1:
     #print(gc.mem_free())
@@ -66,6 +74,11 @@ while 1:
     
     if sys_config.use_keyboard:
         valin = str(input('your cmd(wasd):')).lower()
+        if valin == 'EXIT_SYSTEM'.lower():
+            print('atempting exit')
+            break
+            break
+            break
         for cmd in valin:
             #print(cmd)
             try:
@@ -85,7 +98,9 @@ while 1:
     #print(cmd_list)
     #print(cmd_list)
     for cmd in cmd_list:
-        if cmd == 'H':
+        if sys_config.use_keyboard: # debug 
+            print(cmd)
+        if cmd == 'H':  
             if handler.cur_prog == system.get(init_prog):
                 pass # open app switcher
                 #print('smap')
@@ -93,10 +108,10 @@ while 1:
                 handler.load(init_prog)
             
         handler.cur_cont.current.command(cmd)
-        if sys_config.use_keyboard: print(cmd)
+        
     
     del cmd_list
-    gc.collect()
+    
     #time.sleep(.05)
     
     

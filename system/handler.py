@@ -5,7 +5,7 @@
 #for errors, not currently implemented#from tg_io import io_screen as io # for error programs
 from system import sys_config
 from tg_modules.tg_tools import del_dict_value #ease of life thing
-import gc,time
+import gc,time,sys
 
 #all programs by key
 buffer = {}
@@ -32,9 +32,14 @@ def load(name, path = sys_config.std_path, to_system = 0, err_func = None, err_t
         if name not in buffer:
             #print("it wasn't in buffer", buffer, '\n')
             #see if can be imported
-            try: exec('from '+path+' import ' + name)
-            except: exec('from '+'programs'+' import ' + name)
-    
+            #try:
+            for i in [1]:
+                #try: 
+                    exec('from '+path+' import ' + name)
+                #except: exec('from '+'programs'+' import ' + name)
+            #except:
+                #raise ImportError("""TG:RUNTIME: either the given program to laod is not 
+#present or there is an error in the given program""")
             
             #put into the all programs buffer
             buffer[name] = eval(name)
@@ -111,5 +116,5 @@ def _get_name(module):
             return key
     raise KeyError('TG: Program not loaded')
 
-def loaded_apps():
+def loaded():
     pass
