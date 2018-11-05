@@ -40,6 +40,7 @@ del module_list
 collect()
 
 cur_prog = 0
+
 for page_num in range(ceil(len(filtered_list)/8)):
     #print('making panel no:' + str(page_num))
     pan_pointer = container.add_panel()
@@ -54,4 +55,3 @@ for page_num in range(ceil(len(filtered_list)/8)):
             cur_prog += 1
         except:
             pass
-
