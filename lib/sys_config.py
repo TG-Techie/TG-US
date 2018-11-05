@@ -7,6 +7,8 @@ enable_nav_bar = 0
 
 std_path = 'programs'
 
+
+
 init_prog_path = 'system.programs'
 init_prog_name = 'launcher'
 
