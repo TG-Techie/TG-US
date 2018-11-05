@@ -38,18 +38,18 @@ prog_list = []
 
 #add system stock programs 
 for name in listdir('./programs/stock'):
-    print(name[0:2])
+    #print(name[0:2])
     if not (name[0:2] == ('._' or '__')):
         prog_list.append((name,'programs.stock'))
 #print(prog_list)
 
 #add user exposed programs
 for name in listdir('./' + sys_config.prog_path.replace('.','/')):
-    print(name[0:2])
+    #print(name[0:2])
     if not (name[0:2] == ('._' or '__')):
         prog_list.append((name,sys_config.prog_path))
   
-print(prog_list)
+#print(prog_list)
 
 for prog in prog_list.copy():
     #print(prog, prog[0:2])
@@ -69,9 +69,6 @@ collect()
 num_pages = ceil(len(prog_list)/(params.launch_cols* params.launch_rows))
 
 next_prog = 0
-
-#num_pages += 10
-
 for page_num in range(num_pages):
     pan_pointer = container.add_panel('page' + str(page_num))
     
@@ -88,7 +85,10 @@ for page_num in range(num_pages):
     #time.sleep(3)
     #container.place()
     for but in pan_pointer.menu.contents:
-        print(prog_list[next_prog][0].replace('.py',''))
+        try:
+            if (prog_list[next_prog][0] == '_SPCroot_SPC_ENTloader.py') and not (next_prog == len(prog_list)-1 ):
+                prog_list.append(prog_list.pop(next_prog))
+        except: pass
         try:
             prog_name = prog_list[next_prog][0].replace('.py','')
             prog_path = prog_list[next_prog][1]

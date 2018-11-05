@@ -6,6 +6,8 @@ from tg_modules import tg_gui as gui
 from system import gui_params as params
 import random, time
 
+wants_refresh = 1
+
 x = params.sys_bar_pos[0]
 y = params.sys_bar_pos[1]
 width = params.sys_bar_dims[0]

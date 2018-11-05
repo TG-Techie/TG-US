@@ -70,9 +70,11 @@ while 1:
             
         last_sys_refresh = time.monotonic()
     
+    #print('checking if shoulf refresh system')
+    #print(handler.cur_prog)
     if handler.cur_prog.wants_refresh:
-        #print('moop')
         handler.cur_cont.refresh()
+        
     
     cmd_list = []
     

@@ -11,6 +11,7 @@ from system import handler
 from os import listdir
 
 def try_load_else_import(tup):
+    print(tup)
     try:
         handler.load(tup[0], path = tup[1]+'.'+tup[0])
     except:
@@ -21,14 +22,14 @@ exec(init)
 
 module_list = []
 
-for module in  listdir('./programs'):
-    module_list.append((module,'programs' ))
+for module in  listdir('./programs/user'):
+    module_list.append((module,'programs.user' ))
     
 for module in  listdir('./system/programs'):
     module_list.append((module,'system.programs' ))
 
-for module in  listdir('./system/programs/stock'):
-    module_list.append((module,'system.programs.stock' ))
+for module in  listdir('./programs/stock'):
+    module_list.append((module,'programs.stock' ))
 
 filtered_list = []
 for tup in module_list:
@@ -38,11 +39,19 @@ for tup in module_list:
 del module_list
 collect()
 
-next_prog = 0
+cur_prog = 0
 for page_num in range(ceil(len(filtered_list)/8)):
-    print('making panel no:' + str(page_num))
+    #print('making panel no:' + str(page_num))
     pan_pointer = container.add_panel()
-    print(pan_pointer)
-    pan_pointer.add( list = gui.nidos(cont_x,cont_y,cont_width,cont_height,1,8) )
-
+    #print(pan_pointer)
+    pan_pointer.add( sel = gui.nidos(cont_x,cont_y,cont_width,cont_height,1,8, superior = container) )
+    list_pointer = pan_pointer.sel
+    for but in list_pointer.contents:
+        try:
+            but.text = filtered_list[cur_prog][0]
+            print(filtered_list[cur_prog])
+            but.set_purpose(handler.load,filtered_list[cur_prog])
+            cur_prog += 1
+        except:
+            pass
 

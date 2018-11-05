@@ -17,6 +17,6 @@ prog_path = 'programs.user'
 #show it in the app loaded apps
 init_prog_index = False
 
-system_refresh_interval = 29
+system_refresh_interval = 1
 
-use_keyboard = 1
+use_keyboard = 0
