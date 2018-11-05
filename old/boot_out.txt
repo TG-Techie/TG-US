@@ -1,5 +1,0 @@
-Adafruit CircuitPython 3.0.2 on 2018-09-14; Adafruit Metro M4 Express with samd51j19
-settings.py output:
-Traceback (most recent call last):
-  File "settings.py", line 10, in <module>
-OSError: Read-only filesystem

@@ -16,6 +16,8 @@ class gui_obj():
         global _last_id
         _last_id += 1
         self._gui_id = _last_id 
+        #print('id:' ,_last_id )
+
         #print(self._id)
     
     def __init__(self,x,y,width,height, place = behave.should_place, color_clear = io.background_color):

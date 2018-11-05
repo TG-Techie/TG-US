@@ -4,14 +4,22 @@
 ''' a file made for each device that changes gui shape and behavior'''
 
 from tg_io import io_screen as io
+try:
+    from sys_config import enable_sys_bar as enable_sb
+    from sys_config import enable_nav_bar as enable_nb
+except:
+    enable_sb = 0
+    enable_nb = 0
+
+
 
 #touch screen nav bar
 nav_bar_height = 0
 
 #top system bar shape and size
-sys_bar_pos =  (0,0)
-sys_bar_dims = (io.screen_width,10)
-sys_bar_line_thickness = 2
+sys_bar_pos =  (0*enable_sb,0*enable_sb)
+sys_bar_dims = (io.screen_width*enable_sb,10*enable_sb)
+sys_bar_line_thickness = 2*enable_sb
 sys_bar_line_color = io.white
 
 launch_cols = 3

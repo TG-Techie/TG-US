@@ -9,10 +9,14 @@ gc.enable()
 gc.collect()
 
 #try:
-from programs.__boot import *
+from programs.user import __boot  
 gc.collect()
 #except:
 #    pass
+
+#harware specific inits (like setting rtcs and other stuff)
+from programs.stock import __boot  
+gc.collect()
 
 
 # system boor (rtc and other stuff)
@@ -30,7 +34,8 @@ gc.collect()
 
 
 #ram handler and config of behavior
-from system import sys_config, handler
+from system import handler
+import sys_config# (in lib)
 init_prog = sys_config.init_prog_name
 gc.collect()
 
@@ -58,12 +63,11 @@ while 1:
     #print(gc.mem_free())
     gc.collect()
     #print(gc.mem_free())
-    #print(time.monotonic())
-    #print(time.monotonic() - last_sys_refresh)
     time.sleep(.1)
     if time.monotonic() - last_sys_refresh >= sys_config.system_refresh_interval:
         for process in system:
             process.container.refresh()
+            
         last_sys_refresh = time.monotonic()
     
     if handler.cur_prog.wants_refresh:
@@ -81,7 +85,7 @@ while 1:
             break
         for cmd in valin:
             #print(cmd)
-            try:
+            #try:
                 if cmd == 'h':
                     handler.load(init_prog)
                 try:
@@ -89,8 +93,8 @@ while 1:
                 except:
                     cmd_list.append(cmd[0])
                 #time.sleep(.2)
-            except:
-                print('err')
+            #except:
+                #print('err')
     
     #get cap touched buttons
     cmd_list += button.get_commands()

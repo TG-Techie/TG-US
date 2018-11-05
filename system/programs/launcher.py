@@ -4,27 +4,28 @@
 
 #from system.programs.__blank__app import *
 from system.programs.__blank__app import init
+from gc import collect
 exec(init)
 #print(container._gui_id)
 wants_refresh = 0
 
 from os import listdir
 from system import gui_params as params
-from system import handler, sys_config
+from system import handler
+import sys_config
 from math import ceil
 import time
 
 #cusotmize move loop of launcher 
 container.move_loop = params.launch_move_loop
 
+#dimension math
 #PAGE LABEL DEFS:
 label_x  = cont_x + 3
 label_y = cont_y + 1
 label_width = int(cont_width ) - 6
 label_border = 1
 label_height = 10 + label_border*2
-
-
 #menu defs:
 menu_x = cont_x
 menu_y = cont_y + 1 +label_height
@@ -33,22 +34,38 @@ menu_height = cont_height - 1 - label_height
 
 
 #list of progs
-prog_list = listdir('./' + sys_config.prog_path.replace('.','/'))
+prog_list = []
+
+#add system stock programs 
+for name in listdir('./programs/stock'):
+    print(name[0:2])
+    if not (name[0:2] == ('._' or '__')):
+        prog_list.append((name,'programs.stock'))
 #print(prog_list)
+
+#add user exposed programs
+for name in listdir('./' + sys_config.prog_path.replace('.','/')):
+    print(name[0:2])
+    if not (name[0:2] == ('._' or '__')):
+        prog_list.append((name,sys_config.prog_path))
+  
+print(prog_list)
+
 for prog in prog_list.copy():
     #print(prog, prog[0:2])
     #boolean
     should_exclude = 0
     
     #check if is set aside for something else  or is hidden file (by os)
-    should_exclude += prog[0:2] == ('__' or '._')
+    should_exclude += prog[0][0:2] == ('__' or '._')
     
     if should_exclude:
         prog_list.pop(prog_list.index(prog))
+collect()
 #print(prog_list)
 
 
-#find num pages
+#find num pages always on the high side (meaning blank buttons)
 num_pages = ceil(len(prog_list)/(params.launch_cols* params.launch_rows))
 
 next_prog = 0
@@ -71,17 +88,17 @@ for page_num in range(num_pages):
     #time.sleep(3)
     #container.place()
     for but in pan_pointer.menu.contents:
+        print(prog_list[next_prog][0].replace('.py',''))
         try:
-            prog_name = prog_list[next_prog].replace('.py','')
+            prog_name = prog_list[next_prog][0].replace('.py','')
+            prog_path = prog_list[next_prog][1]
             next_prog += 1
             #print(prog_name.replace('__', '\n'))
             #handler.load(prog_name)
             but.text = prog_name.replace('_ENT', '\n').replace("_SPC",' ')
-            but.set_purpose(handler.load, (prog_name,))
+            but.set_purpose(handler.load, (prog_name,prog_path))
         except:
             but.set_purpose(gui.button_error,(but,'No\nProg'))
             
-            
-        
-        
+
     

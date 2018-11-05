@@ -3,14 +3,17 @@
 #Author: Jonah Yolles-Murphy on Date: 10/17/18
 
 #for errors, not currently implemented#from tg_io import io_screen as io # for error programs
-from system import sys_config
+import sys_config
 from tg_modules.tg_tools import del_dict_value #ease of life thing
-import gc,time,sys
+from tg_modules.tg_gui import window
+import time#,sys
+from gc import collect
 
 #all programs by key
 buffer = {}
 
 #ordered prog lists sperated by type (user or system)
+global system, programs
 programs = []
 system = []
 
@@ -20,92 +23,56 @@ cur_prog = 7
 cur_cont = 7
 
 def load(name, path = sys_config.std_path, to_system = 0, err_func = None, err_tup = (), place = 1, _raise = 0):
-    while (len(buffer) >8) and not _raise:
-        unload(_get_name(programs[0]))
-        
+    global system, programs, cur_prog, cur_cont
     try:
-        if _raise:
-            raise MemoryError()
-        #print(name)
-        #print('atmpt load: ', name)
-        #try to import if given name is not already loaded 
         if name not in buffer:
-            #print("it wasn't in buffer", buffer, '\n')
-            #see if can be imported
-            #try:
-            for i in [1]:
-                #try: 
-                    exec('from '+path+' import ' + name)
-                #except: exec('from '+'programs'+' import ' + name)
-            #except:
-                #raise ImportError("""TG:RUNTIME: either the given program to laod is not 
-#present or there is an error in the given program""")
+            #import the module b/c it is not in ram
+            exec('from '+path+' import ' + name)
             
-            #put into the all programs buffer
             buffer[name] = eval(name)
-            #print('added to buffer', buffer, '\n')
+            
+            if to_system:
+                system.append(buffer[name])
+            else:
+                programs.append(buffer[name])
+            #print(programs,system)
         
-        #ease of coding
         pointer = eval(name)
-        #print(pointer, '\n')
         
-        # pick which list to add the add the module too 
-        list_pointer = (programs, system)[int(bool(to_system))]
+        if pointer in programs:
+            programs.append(programs.pop(programs.index(pointer)))
+        elif pointer in system:
+            system.append(system.pop(system.index(pointer)))
         
-        #remove from list 
-        try:
-            list_pointer.pop(list_pointer.index(pointer))
-        except ValueError:
-           pass
-        
-        #place at  back of list (the most recent prog spot) 
-        list_pointer.append(pointer)
-        
-        global cur_prog, cur_cont
-        
-        # clear and close the current prog
-        # if loading a program that is already present dont 
-        #replaceit else clear the current program
-        if pointer == cur_prog:
-            return pointer
-        
-        #save (not implemented)
+        if cur_prog == pointer:
+            # this means no change is needed
+            #clean up ram then return to user
+            collect()
+            return cur_prog
+        #else:
+            #if (type(cur_cont) == window) and (cur_prog in programs):
+                #cur_cont.clear()
+            
+        #save the previous program
         try: cur_prog.save()
         except: pass
         
-        #print(name, buffer[name],buffer[name].container)
+        cur_cont = pointer.container
+        cur_prog = pointer
         
-        #print(cur_prog, cur_cont)
+        if place:
+            cur_cont.place()
         
-        #set the ease of use variables
-        cur_cont = buffer[name].container
-        cur_prog = buffer[name]
-        
-        #print(cur_prog, cur_cont)
-        
-        cur_cont = cur_prog.container
-        #print(cur_prog,cur_cont)
-        #print(cur_prog, cur_cont)
-        
-        #if place:
-        cur_cont.place()
-        #time.sleep(2)
-        
-        gc.collect()
-        return eval(name)
+        collect()
+        return cur_prog
         
     except MemoryError:
-        target = programs.pop(0)
-        del_dict_value(buffer,target)
-        
-        try: exec('del ')
-        except: pass
-        
-        if not _raise:
-            load(name, path = path, to_system = to_system, err_func = err_func,
-                err_tup = err_tup)
-        gc.collect()
-    gc.collect()
+        print('TG: handler memeory error, unable to laod: '+name)
+        collect()
+        pass
+    collect()
+
+
             
 def unload(name = None ):
     load(name , _raise = 1)
@@ -117,4 +84,4 @@ def _get_name(module):
     raise KeyError('TG: Program not loaded')
 
 def loaded():
-    pass
+    return [_get_name(x) for x in programs]
