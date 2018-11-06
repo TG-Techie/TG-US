@@ -16,6 +16,9 @@ for i in range(3):
     (chip.pixels)
     collect()
 
+### None = 0, c = 1, f = 2 k = 3###
+units = 1
+
 def get_image():
     #harware specific
     # make it usable like: list[x][y]

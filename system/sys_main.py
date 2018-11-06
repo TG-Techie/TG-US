@@ -88,6 +88,9 @@ while 1:
         elif valin[0:5] == 'EXEC_'.lower():
             exec(valin[5:])
             continue
+        elif valin == 'keyboard_off':
+            sys_config.use_keyboard = 0
+            print('turned off')
         for cmd in valin:
             #print(cmd)
             #try:
