@@ -59,6 +59,7 @@ system.add( init_prog, handler.load( sys_config.init_prog_name,
 ###THE LOOP########################################################################################
 gc.collect()
 last_sys_refresh = time.monotonic()
+prev_cmds = []
 while 1:
     #print(gc.mem_free())
     gc.collect()
@@ -107,19 +108,20 @@ while 1:
     #get cap touched buttons
     cmd_list += button.get_commands()
     
+    
     #print(cmd_list)
     #print(cmd_list)
     for cmd in cmd_list:
-        if sys_config.use_keyboard: # debug 
-            print(cmd)
-        if cmd == 'H':  
-            if handler.cur_prog == system.get(init_prog):
-                pass # open app switcher
-                #print('smap')
-            else:
-                handler.load(init_prog)
-            
-        handler.cur_cont.current.command(cmd)
+            if sys_config.use_keyboard: # debug 
+                print(cmd)
+            if cmd == 'H':  
+                if handler.cur_prog == system.get(init_prog):
+                    pass # open app switcher
+                    #print('smap')
+                else:
+                    handler.load(init_prog)
+                
+            handler.cur_cont.current.command(cmd)
     
     #try:handler.unload('example')
     #except: print('dsflkjs')
