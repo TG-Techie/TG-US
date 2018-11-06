@@ -4,5 +4,7 @@
 
 import sys_config
 
-#sys_config.init_prog_path = 'programs.stock'
-#sys_config.init_prog_name = 'Therm_ENT_SPCCam'
+sys_config.init_prog_path = 'programs.stock'
+sys_config.init_prog_name = 'Therm_ENT_SPCCam'
+
+sys_config.use_keyboard = 0

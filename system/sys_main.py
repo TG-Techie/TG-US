@@ -80,11 +80,14 @@ while 1:
     
     if sys_config.use_keyboard:
         valin = str(input('your cmd(wasd):')).lower()
+        #print(valin[0:5])
         if valin == 'EXIT_SYSTEM'.lower():
             print('atempting exit')
             break
-            break
-            break
+        
+        elif valin[0:5] == 'EXEC_'.lower():
+            exec(valin[5:])
+            continue
         for cmd in valin:
             #print(cmd)
             #try:

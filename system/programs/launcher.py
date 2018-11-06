@@ -10,7 +10,7 @@ exec(init)
 wants_refresh = 0
 
 from os import listdir
-from system import gui_params as params
+import sys_gui_params as params
 from system import handler
 import sys_config
 from math import ceil

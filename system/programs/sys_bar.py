@@ -3,7 +3,7 @@
 #Author: Jonah Yolles-Murphy on Date: 10/18/18
 
 from tg_modules import tg_gui as gui
-from system import gui_params as params
+import sys_gui_params as params
 import random, time
 
 wants_refresh = 1

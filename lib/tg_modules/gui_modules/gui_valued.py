@@ -46,12 +46,6 @@ class grid_display(refreshable):
         self.active = 0
         
         #comparative
-        #the previos loaded data grid
-        self.prev = []
-        for valx in range(self.grid_width):
-            self.prev.append([])
-            for valy in range(self.grid_height):
-                self.prev[valx].append(2**31)
         #the difference in tep required for screen change
         self.memory_tol = memory_tol
         
@@ -59,6 +53,15 @@ class grid_display(refreshable):
             self.place()
     
     def place(self):
+        
+        #ensure that each pixel will place
+        #the previos loaded data grid
+        self.prev = []
+        for valx in range(self.grid_width):
+            self.prev.append([])
+            for valy in range(self.grid_height):
+                self.prev[valx].append(2**31)
+                
         self.active = 1
         io.rect(self.x, self.y, self.width, self.height, self.background)
         self.refresh()
@@ -81,11 +84,11 @@ class grid_display(refreshable):
                 y_pos = self.grid_y
                 for y in range(self.grid_height):
                     #check if screen needs refresh! (only chagne prev if screen is to be writen to!)
-                    if abs(data[x][y] - self.prev[x][y]) >= self.memory_tol/2:
+                    color_val = max(0, int(floor(((data[x][y] - min_val)**3/color_range**3)*10) * 255/10) - int( color_range**2/ (data[x][y]*1.01 - min_val )**3))
+                    
+                    if abs(color_val - self.prev[x][y]) >= self.memory_tol:
                         #change the previous stored value
-                        self.prev[x][y] = data[x][y]
-                        
-                        color_val = max(0, int(floor(((data[x][y] - min_val)**3/color_range**3)*10) * 255/10) - int( color_range**2/ (data[x][y]*1.01 - min_val )**3))
+                        self.prev[x][y] = color_val
                         
                         io.rect(self.x + self.border + x*self.pixel_width,
                                 self.y + self.border + y*self.pixel_width,
@@ -100,9 +103,35 @@ class grid_display(refreshable):
                         
 
 class thermal_display(grid_display):
-    def __init__(self, x, y, width, height, data_func, data_tup, border = 0, memory_tol = 1, color_mask = (1,0,0),place =  behave.should_place,
+    '''units: '''
+    def __init__(self, x, y, width, height, data_func, data_tup, units_in = 1, units_out = 1, border = 0, memory_tol = 1, color_mask = (1,0,0),place =  behave.should_place,
                     color_clear = io.background_color, background = io.standard_color):
-        pass
+                        
+        super().__init__(x, y, width, height, data_func, data_tup, border, memory_tol, color_mask, place,
+                    color_clear, background = io.standard_color)
+    
+        self.units_in = units_in
+        self.units_out = units_out
+    
+    def _c2f(self,val):
+        return 1.8*val +32
+    
+    def _f2c(self,val):
+        
+        return (val-32) /1.8
+        
+    def _c2k(self, val):
+        return val + 273
+        
+    def _k2c(self, val):
+        return val - 273
+        
+    def refresh(self):
+        data = super().refresh()
+        
+        
+    
+    
         
         
         
