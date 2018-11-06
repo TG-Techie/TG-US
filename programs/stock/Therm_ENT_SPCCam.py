@@ -31,9 +31,10 @@ def toggle_prog_refresh(but):
 #add panel
 pan = container.add_panel()
 
-#add grid
-pan.add(grid = gui.thermal_display(cont_x+5, cont_y+5, 9*10, 9*10, flipped_data_func, (), border = 5,units_in = units, units_out = 1))
+#add grid and menus
 pan.add(menu = gui.nidos(cont_x+100, cont_y, cont_width - 100, cont_height, 1, 3, x_gap = 5, y_gap =5) )
+pan.add(grid = gui.thermal_display(cont_x+5, cont_y+5, 9*10, 9*10, flipped_data_func, (), border = 5,units_in = units, units_out = 1))
+
 
 pan.menu.of(0,0).set_purpose(toggle_units,(pan.grid,))
 pan.menu.of(0,0).text = 'Toggle\nUnits'

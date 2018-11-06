@@ -120,7 +120,9 @@ while 1:
                 handler.load(init_prog)
             
         handler.cur_cont.current.command(cmd)
-        
+    
+    #try:handler.unload('example')
+    #except: print('dsflkjs')
     
     del cmd_list
     

@@ -68,14 +68,31 @@ def load(name, path = sys_config.std_path, to_system = 0, err_func = None, err_t
         
     except MemoryError:
         print('TG: handler memeory error, unable to laod: '+name)
+        try:
+            unload(programs.pop(0))
+        except:
+            print('TG:MemoryError, try rebooting unable to unload more modules')
         collect()
         pass
     collect()
 
 
             
-def unload(name = None ):
-    load(name , _raise = 1)
+def unload(name):
+    if type(name) == str:
+        programs.pop(programs.index(buffer[name]))
+        del buffer[name]
+        collect()
+    else:
+        try:
+            programs.pop(programs.index(name))
+        except: pass
+        try:
+            del_dict_value(buffer, name)
+        except:pass
+    collect()
+            
+        
 
 def _get_name(module):
     for key in buffer:
