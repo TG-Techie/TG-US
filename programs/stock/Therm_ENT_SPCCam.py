@@ -7,6 +7,7 @@ exec(init)
 wants_refresh = True
 
 from tg_io.io_thermal_cam import get_image, units
+import time
 
 def flipped_data_func():
     dat = get_image()
@@ -20,9 +21,12 @@ def toggle_units(target):
 
 #global wants_refresh
 
-def toggle_prog_refresh():
+def toggle_prog_refresh(but):
     global wants_refresh
     wants_refresh = not wants_refresh
+    #print(('Toggle\nRefresh:\nOFF','Toggle\nRefresh:\nON')[wants_refresh])
+    but.text = ('Toggle\nRefresh:\nOFF','Toggle\nRefresh:\nON')[wants_refresh]
+    #time.sleep(.2)
 
 #add panel
 pan = container.add_panel()
@@ -34,8 +38,8 @@ pan.add(menu = gui.nidos(cont_x+100, cont_y, cont_width - 100, cont_height, 1, 3
 pan.menu.of(0,0).set_purpose(toggle_units,(pan.grid,))
 pan.menu.of(0,0).text = 'Toggle\nUnits'
 
-pan.menu.of(0,1).set_purpose(toggle_prog_refresh,())
-pan.menu.of(0,1).text = 'Toggle\nRefresh'
+pan.menu.of(0,1).set_purpose(toggle_prog_refresh,(pan.menu.of(0,1),) )
+pan.menu.of(0,1).text = 'Toggle\nRefresh'#:\nON'
 
 pan.menu.of(0,2).set_purpose(pan.grid.refresh,())
 pan.menu.of(0,2).text = 'Refresh'
