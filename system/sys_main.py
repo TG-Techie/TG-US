@@ -1,6 +1,9 @@
 #released under:
 #Attribution-NonCommercial 3.0 United States (CC BY-NC 3.0 US)
 #Author: Jonah Yolles-Murphy on Date: 10/17/18
+'''NOTE: this was reverted to a no-switcher state for stability purposes:
+these commits had the switcher: 823d71df1a2ddeef2c82163d846af495fa4a6dfa,
+8af393393fb44851fb2e37c5fa3feb598e3eec07'''
 
 #############IMPORTS###############################################################################
 #harware specific or user specific boot
