@@ -7,40 +7,44 @@ these commits had the switcher: 823d71df1a2ddeef2c82163d846af495fa4a6dfa,
 
 #############IMPORTS###############################################################################
 #harware specific or user specific boot
-import gc
-gc.enable()
-gc.collect()
+from gc import enable, collect
+enable()
+collect()
 
 #try:
 from programs.user import __boot  
-gc.collect()
+collect()
 #except:
 #    pass
 
 #harware specific inits (like setting rtcs and other stuff)
 from programs.stock import __boot  
-gc.collect()
+collect()
 
 
 # system boor (rtc and other stuff)
 from system.boot import *
-gc.collect()
+collect()
 
 #utilities
 from tg_modules.tg_tools import holder
 import time
-gc.collect()
+collect()
 
 #io
 from tg_io import io_button as button
-gc.collect()
+collect()
 
 
-#ram handler and config of behavior
-from system import handler
+#prog handler
+#***handler uni only ever allows one program to be loaded!
+#thus the switcher should be turned of or not implemented
+from system import handler_uni as handler
+
+#config and behavior
 import sys_config# (in lib)
 init_prog = sys_config.init_prog_name
-gc.collect()
+collect()
 
 
 #for ease of code / system container
@@ -49,7 +53,8 @@ system = holder()
 
 #initial sys_bar setup
 system.add('sys_bar', 
-                    handler.load('sys_bar', path  = 'system.programs', to_system = True))
+                    handler.load('sys_bar', path  = 'system.programs',
+                    to_system = True, place = 1))
 #handler.cur_cont.place()
 
 ###THE launcher####################################################################################
@@ -60,12 +65,12 @@ system.add( init_prog, handler.load( sys_config.init_prog_name,
 
 
 ###THE LOOP########################################################################################
-gc.collect()
+collect()
 last_sys_refresh = time.monotonic()
 prev_cmds = []
 while 1:
     #print(gc.mem_free())
-    gc.collect()
+    collect()
     #print(gc.mem_free())
     time.sleep(.1)
     if time.monotonic() - last_sys_refresh >= sys_config.system_refresh_interval:

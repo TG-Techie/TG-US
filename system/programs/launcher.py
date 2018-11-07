@@ -11,7 +11,8 @@ wants_refresh = 0
 
 from os import listdir
 import sys_gui_params as params
-from system import handler
+#from system import handler
+from system import handler_uni as handler
 import sys_config
 from math import ceil
 import time

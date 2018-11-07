@@ -4,18 +4,21 @@
 from system.programs.__blank__app import init
 from gc import collect
 from math import ceil
-from system import handler
+from system.sys_main import handler
 exec(init)
 
-from system import handler
+#from system import handler
 from os import listdir
 
 def try_load_else_import(tup):
     print(tup)
+    exec('from '+tup[1]+' import '+tup[0])
     try:
-        handler.load(tup[0], path = tup[1]+'.'+tup[0])
-    except:
-        exec('from '+tup[1]+' import '+tup[0])
+        if eval(tup[0]).wants_refesh or not eval(tup[0]).wants_refesh:
+            try:
+                handler.load(tup[0], path = tup[1]+'.'+tup[0])
+            except:pass
+    except: pass
 
 from system.programs.__blank__app import init
 exec(init)
