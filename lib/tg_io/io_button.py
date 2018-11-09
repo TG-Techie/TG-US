@@ -25,6 +25,8 @@ def get_commands():
             try:
                 out_list.append(cap0_num2cmd_dict[shifter])
             except: pass
+    time.sleep(.01)
+    cap0.reset()
     
     #print(out_list)
     del data

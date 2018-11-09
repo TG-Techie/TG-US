@@ -24,7 +24,11 @@ backlight = board.D9
 disp_sck = board.SCK
 disp_mosi = board.MOSI
 disp_miso = board.MISO
-disp_cs = board.D8  
+disp_cs = board.D8
 disp_dc = board.D7
 disp_rst = board.D10
 disp_spi = busio.SPI(clock=board.SCK, MOSI=board.MOSI, MISO=board.MISO)
+
+#SD card extionstion from display
+SD_cs = board.D11
+SD_spi = disp_spi

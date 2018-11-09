@@ -13,6 +13,7 @@ gui_white = io.white
 
 gui_move_mode = 1
 
+'''
 sys_bar_x = 0
 sys_bar_y = 0
 sys_bar_height = 12
@@ -30,4 +31,4 @@ prog_cont_height = screen_height - sys_bar_height
 init_select = 1
 
 launcher_cols = 3
-launcher_rows = 3
+launcher_rows = 3'''

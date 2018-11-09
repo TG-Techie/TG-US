@@ -15,7 +15,21 @@ chip = amg.AMG88XX(i2c_port)
 for i in range(3):
     (chip.pixels)
     collect()
+######################################
+#This library only outputs Celsius so here are some tools 
+######################################
+def c2f(val):
+    return (val*9/5) +32
 
+def f2c(val):
+    return (val-32)*5/9
+    
+def c2k(val):
+    return val + 273
+    
+def k2c(val):
+    return val - 273
+        
 ### None = 0, c = 1, f = 2 k = 3###
 units = 1
 

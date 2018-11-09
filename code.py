@@ -7,6 +7,6 @@
 
 #print(tc.get_image())
 
-
+#from tg_io import io_gps as gps
 
 from system import sys_main
