@@ -16,7 +16,7 @@ def get_vis_brightness():
     pass
 
 def get_ir_brightness():
-    pass
+    pass 
     
 def get_uv_brightness():
     return UNSUPPORTED

@@ -17,6 +17,20 @@ import sys_config
 from math import ceil
 import time
 
+def try_load(name,path):
+    '''print('smoop')
+    print(name)
+    print(handler.load(name,path))
+    if not hasattr(eval('handler.'+name), 'validate_is_program'):
+        handler.load('launcher')
+    print('smap')'''
+    try:
+        handler.load(name,path)
+        handler.cur_prog.wants_refresh
+    except:
+        handler.load('launcher')
+    
+
 #cusotmize move loop of launcher 
 container.move_loop = params.launch_move_loop
 
@@ -97,7 +111,7 @@ for page_num in range(num_pages):
             #print(prog_name.replace('__', '\n'))
             #handler.load(prog_name)
             but.text = prog_name.replace('_ENT', '\n').replace("_SPC",' ')
-            but.set_purpose(handler.load, (prog_name,prog_path))
+            but.set_purpose(try_load, (prog_name,prog_path))
         except:
             but.set_purpose(gui.button_error,(but,'No\nProg'))
             

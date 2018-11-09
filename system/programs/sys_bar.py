@@ -7,6 +7,7 @@ import sys_gui_params as params
 import random, time
 
 wants_refresh = 1
+validation_ticket = 42
 
 x = params.sys_bar_pos[0]
 y = params.sys_bar_pos[1]

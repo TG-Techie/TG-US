@@ -7,6 +7,7 @@ import sys_config as sc
 #sc.init_prog_path = 'programs.stock'
 #sc.init_prog_name = '_SPCroot_SPC_ENTloader'
 
+
 sc.use_keyboard = 0
 
 #schedule_secondary_terminal_read

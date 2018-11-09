@@ -5,6 +5,8 @@ init = """
 from tg_modules import tg_gui as gui
 import sys_gui_params as params
 
+validation_ticket = 1
+
 #make color referencing easier
 color = gui.io
 

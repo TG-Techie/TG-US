@@ -6,7 +6,7 @@
 import sys_config
 from tg_modules.tg_tools import del_dict_value #ease of life thing
 from tg_modules.tg_gui import window
-import time, sys_config
+import time#,sys
 from gc import collect
 
 #ordered prog lists sperated by type (user or system)
@@ -22,6 +22,7 @@ cur_name = 'filler_string'
 
 
 def load(name, path = sys_config.std_path, to_system = 0, place = 1):
+    print(name)
     global system, programs, cur_prog, cur_cont, cur_name
     #print(cur_name)
     #print(cur_prog)
@@ -46,11 +47,11 @@ def load(name, path = sys_config.std_path, to_system = 0, place = 1):
             cur_cont.clear()
         except: pass
         
-        try:
+        '''try:
             del cur_prog
             del cur_cont
             exec('del '+cur_name)
-        except: pass
+        except: pass'''
         
     #if teh given name is in system place it from system and then return
     if name in [x[0] for x in system]:
@@ -63,23 +64,20 @@ def load(name, path = sys_config.std_path, to_system = 0, place = 1):
                     cur_cont.place()
                 collect()
                 return mod_tup[1]
-    
-    
-    
-    try:
-        exec('from '+path+' import ' + name )
-    except exception as e:
-        print(e)
-        exec('from '+path+' import ' + name )
-    
-    #if not hasattr(eval(name), 'validate_is_program'):
-        #load(sys_config.init_prog)#
-    
+  
+    fmoop = 5
+    #exec('from '+path+' import ' + name )
+    print((('from '+path+' import ' + name + ' as fmoop' ,)))
+    exec('from '+path+' import ' + name + ' as cur_prog', {'cur_prog':cur_prog})
+    print(fmoop)
+    print(name, cur_prog)
     if to_system:
-        system.append((name, eval(name)))
+        #system.append((name, eval(name)))
+        system.append((name, cur_prog))
     
-    cur_prog = eval(name)
-    cur_cont = eval(name).container
+    #cur_prog = eval(name)
+    #cur_cont = eval(name).container
+    cur_cont = cur_prog.container
     
     if place:
         cur_cont.place()

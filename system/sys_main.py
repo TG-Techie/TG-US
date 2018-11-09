@@ -39,6 +39,7 @@ collect()
 #prog handler
 #***handler uni only ever allows one program to be loaded!
 #thus the switcher should be turned of or not implemented
+#from system import handler_no_lap_uni as handler
 from system import handler_uni as handler
 
 #config and behavior
@@ -71,7 +72,10 @@ prev_cmds = []
 while 1:
     #print(gc.mem_free())
     collect()
-    #print(gc.mem_free())
+    
+    if not hasattr(handler.cur_prog, 'validation_ticket'):
+        hanldler.load(init_prog)
+    
     time.sleep(.1)
     if time.monotonic() - last_sys_refresh >= sys_config.system_refresh_interval:
         for process in system:
