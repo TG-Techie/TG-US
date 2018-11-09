@@ -7,7 +7,7 @@ these commits had the switcher: 823d71df1a2ddeef2c82163d846af495fa4a6dfa,
 
 #############IMPORTS###############################################################################
 #harware specific or user specific boot
-from gc import enable, collect
+from gc import enable, collect, mem_free
 enable()
 collect()
 
@@ -70,11 +70,12 @@ collect()
 last_sys_refresh = time.monotonic()
 prev_cmds = []
 while 1:
-    #print(gc.mem_free())
+    #print(mem_free())
     collect()
-    
-    if not hasattr(handler.cur_prog, 'validation_ticket'):
-        hanldler.load(init_prog)
+
+    '''if not hasattr(handler.cur_prog, 'validation_ticket'):
+        print('marbles')
+        handler.load('error_load_prog','system.programs')'''
     
     time.sleep(.1)
     if time.monotonic() - last_sys_refresh >= sys_config.system_refresh_interval:

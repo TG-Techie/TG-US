@@ -7,8 +7,6 @@ enable_nav_bar = 0
 
 std_path = 'programs'
 
-
-
 init_prog_path = 'system.programs'
 init_prog_name = 'launcher'
 #this is weather the prog should be put in system and hidden from the user or:
@@ -16,10 +14,9 @@ init_prog_name = 'launcher'
 init_prog_index = False
 
 prog_path = 'programs.user'
-#init_prog_name = 'example'
-
-
 
 system_refresh_interval = 15
 
 use_keyboard = 0
+
+# not implemented show_prog_error = 0

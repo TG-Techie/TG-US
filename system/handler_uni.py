@@ -19,10 +19,10 @@ system = []
 cur_prog = 7
 cur_cont = 7
 cur_name = 'filler_string'
-
+last_import_error = 'None'
 
 def load(name, path = sys_config.std_path, to_system = 0, place = 1):
-    global system, programs, cur_prog, cur_cont, cur_name
+    global system, programs, cur_prog, cur_cont, cur_name, last_import_error
     #print(cur_name)
     #print(cur_prog)
     #print([x[1] for x in system])
@@ -68,9 +68,11 @@ def load(name, path = sys_config.std_path, to_system = 0, place = 1):
     
     try:
         exec('from '+path+' import ' + name )
-    except exception as e:
-        print(e)
-        exec('from '+path+' import ' + name )
+    except Exception as e:
+        last_import_error = e
+        #exec('from '+path+' import ' + name )
+    
+    cur_name = name#keep this after the import so prograsm can acces last used name
     
     #if not hasattr(eval(name), 'validate_is_program'):
         #load(sys_config.init_prog)#

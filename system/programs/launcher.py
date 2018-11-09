@@ -18,17 +18,11 @@ from math import ceil
 import time
 
 def try_load(name,path):
-    '''print('smoop')
-    print(name)
-    print(handler.load(name,path))
-    if not hasattr(eval('handler.'+name), 'validate_is_program'):
-        handler.load('launcher')
-    print('smap')'''
     try:
         handler.load(name,path)
         handler.cur_prog.wants_refresh
     except:
-        handler.load('launcher')
+        handler.load('error_load_prog','system.programs.errors')
     
 
 #cusotmize move loop of launcher 
