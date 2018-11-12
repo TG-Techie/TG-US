@@ -66,10 +66,13 @@ def load(name, path = sys_config.std_path, to_system = 0, place = 1):
                 return mod_tup[1]
   
     fmoop = 5
+    print(cur_prog)
     #exec('from '+path+' import ' + name )
-    print((('from '+path+' import ' + name + ' as fmoop' ,)))
+    print((('from '+path+' import ' + name + ' as cur_prog' ,)))
+    exec('from system.programs import sys_bar')
+    print(cur_prog)
     exec('from '+path+' import ' + name + ' as cur_prog', {'cur_prog':cur_prog})
-    print(fmoop)
+    print(cur_prog)
     print(name, cur_prog)
     if to_system:
         #system.append((name, eval(name)))

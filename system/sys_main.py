@@ -109,6 +109,7 @@ while 1:
             #print(cmd)
             #try:
                 if cmd == 'h':
+                    collect()
                     handler.load(init_prog)
                 try:
                     cmd_list.append({'w':'^', 'a':'<', 's':'V', 'd':'>', 'e':'E'}[cmd[0]])
@@ -128,6 +129,7 @@ while 1:
             if sys_config.use_keyboard: # debug 
                 print(cmd)
             if cmd == 'H':  
+                collect()
                 if handler.cur_prog == system.get(init_prog):
                     pass # open app switcher
                     #print('smap')
@@ -142,5 +144,3 @@ while 1:
     del cmd_list
     
     #time.sleep(.05)
-    
-    

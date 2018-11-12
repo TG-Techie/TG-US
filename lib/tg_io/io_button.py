@@ -2,15 +2,14 @@
 #Attribution-NonCommercial 3.0 United States (CC BY-NC 3.0 US)
 #Author: Jonah Yolles-Murphy on Date: 10/28/18
 import time
-try: from tg_io.staging.touch_brd0 import cap0
-except: pass
+from tg_io.staging.touch_brd0 import cap0
 cap0.reset()
 
 try: from tg_io.staging.touch_brd0 import cap1
 except: pass
 
 #hardware specific code
-cap0_num2cmd_dict = {0 : '<', 1:'E', 2:'>', 3:'H'}
+cap0_num2cmd_dict = {3 : '<', 4:'E', 5:'>', 6:'H', 2:'S'}
 
 def get_commands():
     #returning a list of cmds
@@ -20,15 +19,17 @@ def get_commands():
     time.sleep(.05)
     data = cap0.touched()
     #print(bin(data))
-    for shifter in range(12):
-        if 1<<shifter & data:
-            try:
-                out_list.append(cap0_num2cmd_dict[shifter])
-            except: pass
-    time.sleep(.01)
-    cap0.reset()
-    
-    #print(out_list)
-    del data
-    return out_list
-            
+    if data:
+        for shifter in range(12):
+            if 1<<shifter & data:
+                try:
+                    out_list.append(cap0_num2cmd_dict[shifter])
+                except: pass
+        time.sleep(.01)
+        cap0.reset()
+        
+        #print(out_list)
+        del data
+        return out_list
+    else:
+        return []

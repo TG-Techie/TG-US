@@ -5,7 +5,7 @@
 #for errors, not currently implemented#from tg_io import io_screen as io # for error programs
 import sys_config
 from tg_modules.tg_tools import del_dict_value #ease of life thing
-from tg_modules.tg_gui import window
+#from tg_modules.tg_gui import window
 import time, sys_config
 from gc import collect
 
