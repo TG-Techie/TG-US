@@ -16,7 +16,8 @@ def get_commands():
     out_list = []
     
     #this is harware specific code too
-    time.sleep(.05)
+    #cap0.reset()
+    time.sleep(.005)
     data = cap0.touched()
     #print(bin(data))
     if data:
@@ -26,7 +27,7 @@ def get_commands():
                     out_list.append(cap0_num2cmd_dict[shifter])
                 except: pass
         time.sleep(.01)
-        cap0.reset()
+    
         
         #print(out_list)
         del data
