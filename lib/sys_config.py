@@ -9,13 +9,17 @@ std_path = 'programs'
 
 init_prog_path = 'system.programs'
 init_prog_name = 'launcher'
-#this is weather the prog should be put in system and hidden from the user or:
+#VV this VV is weather the prog should be put in system and hidden from the user or:
 #show it in the app loaded apps
 init_prog_index = False
 
+settings_active = 1
+settings_prog = 'settings'
+settings_path = 'system.programs'
+
 prog_path = 'programs.user'
 
-system_refresh_interval = 15
+system_refresh_interval = .71
 
 use_keyboard = 0
 

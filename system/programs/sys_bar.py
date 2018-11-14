@@ -5,6 +5,8 @@
 from tg_modules import tg_gui as gui
 import sys_gui_params as params
 import random, time
+from tg_io import io_battery as bat
+from gc import collect 
 
 wants_refresh = 1
 validation_ticket = 42
@@ -15,22 +17,69 @@ width = params.sys_bar_dims[0]
 height = params.sys_bar_dims[1]
 line_height = params.sys_bar_line_thickness
 line_color = params.sys_bar_line_color
+text_width = width - 14
 
 # the window
 container = gui.window(x,y,width,height + line_height)
 
 panel = container.add_panel()
 
-def change_bar_text(bar_obj):
+'''def change_bar_text(bar_obj):
     nextval = ''.join(random.choice('qwertyuiopasdfghjklzxcvbnm1234567890') for x in range(26))
     #print(nextval)
-    bar_obj.value = nextval
+    bar_obj.value = nextval'''
 
+def num_2_time(val):
+    if val < 10:
+        return'0' + str(val)
+    else:
+        return str(val)
+
+#middle = ((cont_x/6)/2) - 3
+def change_bar_text(target):
+    
+    #time section
+    current = time.localtime()
+    #config hour
+    hour = num_2_time(current[3])
+    
+    #config minute
+    minu = num_2_time(current[4])
+
+    #config seconds
+    sec = num_2_time(current[5])
+    
+    #battery section
+    valin  = bat.get_percentage()
+    per = str(round(valin*100))
+    while len(per) < 3:
+        per = ' '+per
+
+    
+    target.value = '['+ hour +':'+ minu +':'+ sec +']'+ target.value[10:-4] + per + '%' 
+    if target.active:
+        if bat.is_charging():
+            gui.io.text(text_width , y + 1, '__batachrg__')
+        else:
+            gui.io.text(text_width , y + 1, '__bata'+str(round(valin*6))+'__')
+    collect()
+    
+'''
+    valin  = bat.get_percentage()
+    per = round(valin*100)
+    if per < 10:
+        txt = '  ' + str(per)
+    elif per <100:
+        txt = ' ' + str(per)
+    else:
+        txt = str(per)'''
+    
 #print(x,y,width,height)
 
 #add the text (across whole top bar) and the line to sepreate it
-panel.add(text = gui.text(x, y, width, height, '123 this is 26 long 123453',color = line_color))
-#print(panel.text.char_width)
+panel.add(text = gui.text(x, y, text_width, height, ' '*int(text_width/6),color = line_color))
+
+change_bar_text(panel.text)
 panel.add(line = gui.rect(x,height,width, line_height, line_color))
 
 panel.add(refer = gui.operator(change_bar_text, (panel.text,)  ))

@@ -20,6 +20,7 @@ import time
 def try_load(name,path):
     try:
         handler.load(name,path)
+        handler.cur_prog.validation_ticket
         handler.cur_prog.wants_refresh
     except:
         handler.load('error_load_prog','system.programs.errors')

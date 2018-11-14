@@ -32,9 +32,12 @@ import time
 collect()
 
 #io
-from tg_io import io_button as button
+try:
+    from tg_io import io_button as button
+    button_active = 1
+except:
+    button_active = 0
 collect()
-
 
 #prog handler
 #***handler uni only ever allows one program to be loaded!
@@ -44,6 +47,7 @@ from system import handler_uni as handler
 
 #config and behavior
 import sys_config# (in lib)
+
 init_prog = sys_config.init_prog_name
 collect()
 
@@ -63,6 +67,7 @@ system.add('sys_bar',
 system.add( init_prog, handler.load( sys_config.init_prog_name, 
                                                     sys_config.init_prog_path, 
                                                     not sys_config.init_prog_index))
+
 
 
 ###THE LOOP########################################################################################
@@ -112,7 +117,7 @@ while 1:
                     collect()
                     handler.load(init_prog)
                 try:
-                    cmd_list.append({'w':'^', 'a':'<', 's':'V', 'd':'>', 'e':'E'}[cmd[0]])
+                    cmd_list.append({'w':'^', 'a':'<', 's':'V', 'd':'>', 'e':'E', 'p':'S'}[cmd[0]])
                 except:
                     cmd_list.append(cmd[0])
                 #time.sleep(.2)
@@ -120,7 +125,8 @@ while 1:
                 #print('err')
     
     #get cap touched buttons
-    cmd_list += button.get_commands()
+    if button_active:
+        cmd_list += button.get_commands()
     
     
     #print(cmd_list)
@@ -130,11 +136,14 @@ while 1:
                 print(cmd)
             if cmd == 'H':  
                 collect()
-                if handler.cur_prog == system.get(init_prog):
-                    pass # open app switcher
+                #if handler.cur_prog == system.get(init_prog):
+                    #pass # open app switcher
                     #print('smap')
-                else:
-                    handler.load(init_prog)
+                #else:
+                handler.load(init_prog)
+            elif (cmd == 'S') and sys_config.settings_active:
+                print('slkjdnfka')
+                handler.load(sys_config.settings_prog, sys_config.settings_path)
                 
             handler.cur_cont.current.command(cmd)
     

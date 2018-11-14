@@ -6,7 +6,7 @@
 import sys_config
 from tg_modules.tg_tools import del_dict_value #ease of life thing
 #from tg_modules.tg_gui import window
-import time, sys_config
+import time, sys_config, sys
 from gc import collect
 
 #ordered prog lists sperated by type (user or system)
@@ -70,6 +70,10 @@ def load(name, path = sys_config.std_path, to_system = 0, place = 1):
         exec('from '+path+' import ' + name )
     except Exception as e:
         last_import_error = e
+        sys.print_exception(e)
+        print('TG:there was a serious error loading a progam!')
+        sys.exit()
+        
         #exec('from '+path+' import ' + name )
     
     cur_name = name#keep this after the import so prograsm can acces last used name

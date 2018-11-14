@@ -4,6 +4,7 @@
 init = """
 from tg_modules import tg_gui as gui
 import sys_gui_params as params
+from gc import collect
 
 validation_ticket = 1
 
