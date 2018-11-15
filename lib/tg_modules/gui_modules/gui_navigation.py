@@ -337,6 +337,7 @@ class panel(gui_obj):
                     raise TypeError('TG: Suspected: tried to add a non gui object to panel')
             except AttributeError: 
                 raise TypeError('TG: Suspected: tried to add a non gui object to panel')
+        return
                 
     
     def refresh(self):

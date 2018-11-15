@@ -13,6 +13,15 @@ page1 = container.add_panel()
 
 bar_width = cont_width
 bar_height = 10
+####################################################
+def light_updater(funcin, target,start): # takes io_light function and the target text and then returns temp
+    tup = funcin()
+    #print(tup)
+    #print(target.value, type(target.value))
+    val = str(int(tup[0]))+'/'+str(int(tup[1]))
+    target.value = val
+    #print(val, type(val))
+    return tup[0]
 
 ####################################################
 ###page 0
@@ -31,12 +40,15 @@ temp_text = 'Temp(c):'
 page0.add(temp_text = gui.text(cont_x, cur_y,len(temp_text)*7, increment_val, temp_text ))
 cur_y += increment_val
 
-page0.add( temp_bar = gui.value_bar(cont_x,cur_y, bar_width, bar_height, io_temp.get_temp_c, ()) )
+page0.add( temp_bar = gui.value_bar(cont_x,cur_y, bar_width, bar_height, io_temp.get_temp_c, (),
+            min_val = io_temp.MIN, max_val = io_temp.MAX) )
 cur_y += increment_val
 
 ###voc##############
 
-
+label_light = '-moop2'
+page0.add(light_label = gui.text(cont_x, cur_y,len(label_light)*7, increment_val, label_light ))
+cur_y += increment_val
 
 
 
@@ -57,26 +69,35 @@ cur_y += increment_val
 #ambi
 ambi_text = 'Ambi:'
 page1.add(ambi_text = gui.text(cont_x, cur_y,len(ambi_text)*7, increment_val, ambi_text ))
-print('moop')
+page1.add(ambi_out = gui.text(cont_x+len(ambi_text)*7, cur_y, cont_width-len(ambi_text)*7, increment_val, ' ' ))
 cur_y += increment_val
 
-page1.add( ambi_bar = gui.value_bar(cont_x,cur_y, bar_width, bar_height, io_light.get_ambi_brightness, ()) )
+page1.add( ambi_bar = gui.value_bar(cont_x,cur_y, bar_width, bar_height, 
+            light_updater, (io_light.get_ambi_brightness, page1.ambi_out, 5), 
+            max_val = io_light.get_ambi_brightness()[0]*2) )
 cur_y += increment_val
+
 
 #vis
-visual_text = 'visual:'
-page1.add(visual_text = gui.text(cont_x, cur_y,len(visual_text)*7, increment_val, visual_text ))
+vis_text = 'visual:'
+page1.add(vis_text = gui.text(cont_x, cur_y,len(vis_text)*7, increment_val, vis_text ))
+page1.add(vis_out = gui.text(cont_x+len(vis_text)*7, cur_y, cont_width-len(vis_text)*7, increment_val, ' ' ))
 cur_y += increment_val
 
-page1.add( vis_bar = gui.value_bar(cont_x,cur_y, bar_width, bar_height, io_light.get_vis_brightness, ()) )
+page1.add( vis_bar = gui.value_bar(cont_x,cur_y, bar_width, bar_height, 
+            light_updater, (io_light.get_vis_brightness, page1.vis_out, 7),
+            max_val = io_light.get_vis_brightness()[0]*2))
 cur_y += increment_val
 
 # ir
 ir_text = 'IR:'
 page1.add(ir_text = gui.text(cont_x, cur_y,len(ir_text)*7, increment_val, ir_text ))
+page1.add(ir_out = gui.text(cont_x+len(ir_text)*7, cur_y, cont_width-len(ir_text)*7, increment_val, ' ' ))
 cur_y += increment_val
 
-page1.add( ir_bar = gui.value_bar(cont_x,cur_y, bar_width, bar_height, io_light.get_ir_brightness, ()) )
+page1.add( ir_bar = gui.value_bar(cont_x,cur_y, bar_width, bar_height,
+            light_updater,(io_light.get_ir_brightness,page1.ir_out, 4),
+            max_val = io_light.get_ir_brightness()[0]*2))
 cur_y += increment_val
 
 #uv

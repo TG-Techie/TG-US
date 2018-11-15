@@ -15,12 +15,9 @@ message = '''ERROR: program unloadable
 to leave this screen!
 
 >>> there was an error
-loading program:
+loading a program
 
-"''' + str(handler.cur_name) +'''"
-
-this is due to an error in
-the program
-'''
+plug into a serial com
+port for error output'''
 
 page.add( text = gui.text(cont_x,cont_y,cont_width, cont_height, message, background = color.blue))

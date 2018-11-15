@@ -5,6 +5,10 @@
 
 from tg_io.staging.mcp9808_setup import mcp
 
+#####constanst based on chip capabilities####
+MAX = 125 # max fo sensor in degree c!
+MIN = -25
+
 ##here are some tools ######################################
 def c2f(val):
     return (val*9/5) +32
@@ -20,9 +24,6 @@ def k2c(val):
 
 
 ###fill in harware reporint values##########
-
-max = 125 # max fo sensor in degree c!
-min = -25
 
 def get_temp_c():
     return mcp.temperature

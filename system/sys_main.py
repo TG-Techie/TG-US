@@ -136,11 +136,11 @@ while 1:
                 print(cmd)
             if cmd == 'H':  
                 collect()
-                #if handler.cur_prog == system.get(init_prog):
-                    #pass # open app switcher
+                if handler.cur_prog == system.get(init_prog):
+                    pass # open app switcher
                     #print('smap')
-                #else:
-                handler.load(init_prog)
+                else:
+                    handler.load(init_prog)
             elif (cmd == 'S') and sys_config.settings_active:
                 print('slkjdnfka')
                 handler.load(sys_config.settings_prog, sys_config.settings_path)

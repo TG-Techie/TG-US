@@ -161,15 +161,18 @@ class value_bar(valued):
     
     def refresh(self):
         
-        val_width = int(self.delta_x*(self.data_func(*self.data_tup) - self.min_val)/self.max_val)
-        print(val_width)
+        val = max(min(self.data_func(*self.data_tup), self.max_val), self.min_val)
+        
+        val_width = int(self.delta_x*(val - self.min_val)/self.max_val)
+        #print(val_width)
         #place bar to cover previous
-        if val_width != self.delta_x:
-            io.if_rect(self.x + val_width + self.radius*2 + self.border*2, self.y + 2*self.border,
-                        self.delta_x- val_width , 
-                        self.height- 4*self.border ,
-                        self.radius - 2*self.border, 
-                        self.background)
+        
+        
+        io.if_rect(self.x + val_width + self.radius*2 + self.border, self.y + self.border,
+                    self.delta_x- val_width , 
+                    self.height- 2*self.border ,
+                    self.radius - self.border, 
+                    self.background)
         
         #place value bar
         io.if_rect(self.x + self.border*2, self.y + 2*self.border,
