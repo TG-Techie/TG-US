@@ -44,7 +44,7 @@ class valued(gui_obj):
     has_value = True
     is_selectable = False
     is_navigable = False
-    is_refreshable = False
+    is_refreshable = True
     
     
     def __init__(self,x,y,width,height,value, place = behave.should_place, color_clear = io.background_color):
@@ -64,7 +64,7 @@ class valued(gui_obj):
             #self.clear() #SHOULD HAVE THIS??
             self._value = new_val
             if self.active:
-                self.place()
+                self.refresh()
         
 
 class selectable(gui_obj):

@@ -3,14 +3,13 @@
 #Author: Jonah Yolles-Murphy on Date: 10/31/18
 
 import sys_config as sc
-from tg_io import io_light as l
+import time
 
-#print(l.get_vis_brightness())
+'''from programs.user import example_ENT_SPC_SPC_SPC3 as ex
+ex.page.place()
 
-#sc.init_prog_path = 'programs.stock'
-#sc.init_prog_name = '_SPCroot_SPC_ENTloader'
-
+ex.incre_bar_val(ex.page.my_bar, 70)
 
 #sc.use_keyboard = 0
-
+time.sleep(10)'''
 #schedule_secondary_terminal_read

@@ -21,7 +21,7 @@ prog_path = 'programs.user'
 
 system_refresh_interval = 2
 
-use_keyboard = 1
+use_keyboard = 0
 
 
 # not implemented show_prog_error = 0

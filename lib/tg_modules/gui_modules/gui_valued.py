@@ -134,13 +134,13 @@ class value_bar(valued):
         
         #needed for value gui objects
         self.active = 0
-        self._value = 0
+        self._value = self.min_val
         
         if place:
             self.place()
             
     
-    def place(self):
+    def place(self, refresh = 1):
         self.active = 1
         
         io.if_rect(self.x, self.y, self.width, self.height, self.radius, self.border_color)
@@ -151,7 +151,8 @@ class value_bar(valued):
                     self.background)
         
         
-        self.refresh()
+        if refresh:
+            self.refresh()
     
     def clear(self):
         
@@ -166,14 +167,15 @@ class value_bar(valued):
         val_width = int(self.delta_x*(val - self.min_val)/self.max_val)
         #print(val_width)
         #place bar to cover previous
-        
-        
-        io.if_rect(self.x + val_width + self.radius*2 + self.border, self.y + self.border,
-                    self.delta_x- val_width , 
-                    self.height- 2*self.border ,
-                    self.radius - self.border, 
-                    self.background)
-        
+        if val == self.min_val:
+            self.place(refresh = 0)
+        if self.min_val <= val_width <= self.max_val:
+            io.if_rect(self.x + val_width + self.radius*2 + 2*self.border, self.y + self.border,
+                        self.delta_x- val_width , 
+                        self.height- 2*self.border ,
+                        self.radius - self.border, 
+                        self.background)
+            
         #place value bar
         io.if_rect(self.x + self.border*2, self.y + 2*self.border,
                     val_width + self.radius*2, 
