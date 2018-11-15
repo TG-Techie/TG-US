@@ -35,9 +35,17 @@ def num_2_time(val):
     else:
         return str(val)
 
-#middle = ((cont_x/6)/2) - 3
+def place_bat(valin = None):
+    if type(valin) == float:
+        if bat.is_charging():
+            gui.io.text(text_width , y + 1, '__batachrg__')
+        else:
+            gui.io.text(text_width , y + 1, '__bata'+str(round(valin*6))+'__')
+    else:
+        gui.io.text(text_width , y + 1, '  ')
+
 def change_bar_text(target):
-    
+    global place_bat
     #time section
     current = time.localtime()
     #config hour
@@ -47,21 +55,19 @@ def change_bar_text(target):
     minu = num_2_time(current[4])
 
     #config seconds
-    sec = num_2_time(current[5])
+    #sec = num_2_time(current[5])
     
     #battery section
     valin  = bat.get_percentage()
     per = str(round(valin*100))
     while len(per) < 3:
         per = ' '+per
-
     
-    target.value = '['+ hour +':'+ minu +':'+ sec +']'+ target.value[10:-4] + per + '%' 
+    target.value = '['+ hour +':'+ minu +']'+ target.value[7:-4] + per + '%' 
+    
     if target.active:
-        if bat.is_charging():
-            gui.io.text(text_width , y + 1, '__batachrg__')
-        else:
-            gui.io.text(text_width , y + 1, '__bata'+str(round(valin*6))+'__')
+        place_bat(valin)
+    
     collect()
     
 '''
@@ -82,7 +88,8 @@ panel.add(text = gui.text(x, y, text_width, height, ' '*int(text_width/6),color 
 change_bar_text(panel.text)
 panel.add(line = gui.rect(x,height,width, line_height, line_color))
 
-panel.add(refer = gui.operator(change_bar_text, (panel.text,)  ))
+panel.add(refer = gui.on_refresh(change_bar_text, (panel.text,)  ))
+panel.add(bat = gui.on_place(place_bat, (bat.get_percentage(),), place_bat, (None,),))
 
 #panel.place()
 #change_bar_text(panel.text)

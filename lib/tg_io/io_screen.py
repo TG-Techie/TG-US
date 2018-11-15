@@ -43,7 +43,7 @@ def round_rect(x,y,width,height,r,color):
 #NEED THIS ^^^^
 
 def if_rect(x,y,width,height,r,color):
-    if r:
+    if r > 0:
         round_rect(x,y,width,height,r,color)
     else:
         rect(x,y,width,height,color)

@@ -19,9 +19,9 @@ settings_path = 'system.programs'
 
 prog_path = 'programs.user'
 
-system_refresh_interval = .71
+system_refresh_interval = 2
 
-use_keyboard = 0
+use_keyboard = 1
 
 
 # not implemented show_prog_error = 0

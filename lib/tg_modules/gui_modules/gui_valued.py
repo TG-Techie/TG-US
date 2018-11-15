@@ -2,7 +2,7 @@
 #Attribution-NonCommercial 3.0 United States (CC BY-NC 3.0 US)
 #Author: Jonah Yolles-Murphy on Date: 11/05/18
 
-from tg_modules.gui_modules.gui_base import refreshable, io, behave
+from tg_modules.gui_modules.gui_base import refreshable, valued, io, behave
 import time
 from math import floor
 from gc import collect
@@ -99,78 +99,85 @@ class grid_display(refreshable):
             del data, x_pos, y_pos
             collect()
             return(max_val, min_val, color_range)
-                        
-                        
 
-class thermal_display(grid_display):
-    '''units: none = 0, c=1, f=2, k=3'''
-    def __init__(self, x, y, width, height, data_func, data_tup, units_in = 1, units_out = 2, border = 0, memory_tol = 1, color_mask = (1,0,0),place =  behave.should_place,
-                    color_clear = io.background_color, background = io.standard_color):
-                        
-        super().__init__(x, y, width, height, data_func, data_tup, border, memory_tol, color_mask, place,
-                    color_clear, background = io.standard_color)
-    
-        self.units_in = units_in
-        self.units_out = units_out
-    
-    def _c2f(self,val):
-        #print('moop')
-        return (val*9/5) +32
-    
-    def _f2c(self,val):
-        return (val-32)*5/9
+
+class value_bar(valued):
+    def __init__(self,x,y,width,height, data_func, data_tup, min_val = 0, max_val = 100, color = io.white, background = io.black, 
+                    border_color = io.white , border = 1, radius = 0, 
+                    place = behave.should_place, color_clear = io.background_color):
+        self._set_id()
         
-    def _c2k(self, val):
-        return val + 273
+        #shape params
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.border = border
+        self.radius = radius
         
-    def _k2c(self, val):
-        return val - 273
+        #data adjust
+        self.min_val = min_val
+        self.max_val = max_val
         
-    def refresh(self):
-        data = super().refresh()
+        #stuff to get data
+        self.data_func = data_func
+        self.data_tup = data_tup
         
-        maxin = data[0]
-        minin = data[1]
+        #colors
+        self.color = color
+        self.border_color = border_color
+        self.background = background
+        self.color_clear = color_clear
         
-        #print(self.units_in, self.units_out)
-        if self.units_in != self.units_out:
-            #print(maxin,minin)
-            if self.units_in >= 2:
-                maxin = (self._f2c,self._k2c)[self.units_in-2](maxin)
-                minin = (self._f2c,self._k2c)[self.units_in-2](minin)
-            #print(maxin,minin)
-            if self.units_out >= 2:
-                maxin = (self._c2f,self._c2k)[self.units_out-2](maxin)
-                minin = (self._c2f,self._c2k)[self.units_out-2](minin)
-            #print(maxin,minin)   
+        # max change in bar
+        self.delta_x = self.width - self.radius*2 - border*4 
         
+        #needed for value gui objects
+        self.active = 0
+        self._value = 0
+        
+        if place:
+            self.place()
             
-        
-        line0 = 'Max: '+str(int(maxin)) + ('','C__degreesign__','F__degreesign__','K')[self.units_out] + '  '
-        line1 = 'Min: '+str(int(minin)) + ('','C__degreesign__','F__degreesign__','K')[self.units_out] + '  '
-        
-        io.text(self.x, self.height + self.y,line0)
-        io.text(self.x, 1+ self.height + self.y + io.text_dimensions(self.x, self.height + self.y,line0)[1],line1)
-        
-        #io.text_dimensions()
-        
-        
     
+    def place(self):
+        self.active = 1
+        
+        io.if_rect(self.x, self.y, self.width, self.height, self.radius, self.border_color)
+        io.if_rect(self.x + self.border, self.y + self.border,
+                    self.width - 2*self.border, 
+                    self.height- 2*self.border ,
+                    self.radius - self.border, 
+                    self.background)
+        
+        
+        self.refresh()
     
+    def clear(self):
         
+        self.active = 0
         
+        io.if_rect(self.x, self.y, self.width, self.height, self.radius, self.color_clear)
+    
+    def refresh(self):
         
+        val_width = int(self.delta_x*(self.data_func(*self.data_tup) - self.min_val)/self.max_val)
+        print(val_width)
+        #place bar to cover previous
+        if val_width != self.delta_x:
+            io.if_rect(self.x + val_width + self.radius*2 + self.border*2, self.y + 2*self.border,
+                        self.delta_x- val_width , 
+                        self.height- 4*self.border ,
+                        self.radius - 2*self.border, 
+                        self.background)
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        #place value bar
+        io.if_rect(self.x + self.border*2, self.y + 2*self.border,
+                    val_width + self.radius*2, 
+                    self.height- 4*self.border ,
+                    self.radius - 2*self.border, 
+                    self.color)
+    
         
         
         

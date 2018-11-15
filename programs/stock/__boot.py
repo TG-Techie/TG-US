@@ -5,7 +5,7 @@
 import sys_config as sc
 from tg_io import io_light as l
 
-print(l.get_vis_brightness())
+#print(l.get_vis_brightness())
 
 #sc.init_prog_path = 'programs.stock'
 #sc.init_prog_name = '_SPCroot_SPC_ENTloader'
