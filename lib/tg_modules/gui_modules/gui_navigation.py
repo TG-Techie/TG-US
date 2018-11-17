@@ -352,6 +352,13 @@ class panel(gui_obj):
     @property
     def nav(self):
         return self._nav
+    
+    def _overwrite_cmd_dict(self):
+        self.cmd_dict['<'] = (self.nav.move , (-1,0))
+        self.cmd_dict['>'] = (self.nav.move , (1,0))
+        self.cmd_dict['^'] = (self.nav.move ,(0,-1))
+        self.cmd_dict['V'] = (self.nav.move , (0,1))
+        self.cmd_dict['E'] = (self.nav.press ,())
         
     @nav.setter
     def nav(self,val, overwite_move = None):
@@ -360,11 +367,7 @@ class panel(gui_obj):
             if overwite_move == None: # why?
                 overwite_move = self.overwite_move
             if overwite_move:
-                self.cmd_dict['<'] = (self.nav.move , (-1,0))
-                self.cmd_dict['>'] = (self.nav.move , (1,0))
-                self.cmd_dict['^'] = (self.nav.move ,(0,-1))
-                self.cmd_dict['V'] = (self.nav.move , (0,1))
-                self.cmd_dict['E'] = (self.nav.press ,())
+                self._overwrite_cmd_dict()
         else:
             raise TypeError("TG: tried to set panel's nav to object not already in panel, object must be in panel")
     

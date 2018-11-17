@@ -4,8 +4,10 @@
 
 from system.programs.__blank__app import gui, cont_x, cont_y, cont_width, cont_height, collect
 
+global pop_up
 
 def return_to_parent(target):
+    global pop_up
     #remove the panel from the target
     #target.contents.pop(target.contents.index(target.nav))
     #del target.pop
@@ -15,6 +17,8 @@ def return_to_parent(target):
         if obj.is_navigable:
             target.nav = obj
             break
+    
+    pop_up.yes_no.of(0,0).set_purpose(print,('TG:POP_UP: "BridgeKeeper: Who would cross the bridge of death must answer me these questions three ere the other side he see"',))
     
     target.place()
     
@@ -40,8 +44,8 @@ pop_up.yes_no.of(0,0).text = 'YES'
 pop_up.yes_no.of(1,0).set_purpose(return_to_parent, (None))
 pop_up.yes_no.of(1,0).text = 'NO'
 
-def summon_pop_up(target, yes_func, yes_tup, message):
-    global pop_up
+def summon(target, yes_func, yes_tup, message):
+    global pop_up,return_to_parent
     
     #set message
     pop_up.text = message
@@ -50,9 +54,11 @@ def summon_pop_up(target, yes_func, yes_tup, message):
     pop_up.yes_no.of(0,0).set_purpose(yes_func, yes_tup)
     
     #set parent to return to
-    pop_up.yes_no.of(1,0).purpose_tup = (target,)
+    pop_up.yes_no.of(1,0).set_purpose(return_to_parent, (target,))
     
     #target.add( pop = pop_up)
     target._nav = pop_up.nav
+    #print(pop_up.nav, target.nav)
+    target._overwrite_cmd_dict()
     pop_up.place()
     

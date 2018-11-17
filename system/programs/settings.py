@@ -23,11 +23,6 @@ def togl_bright(target):
         val += .2
     gui.io.set_backlight( val )
     target.text = 'Brightness:'+str(round(val*5))+'/5'
-
-
-def restart_query(page):
-    global pop_up, ctrl
-    pop_up.summon_pop_up(page, ctrl.reset, (), 'are you sure you want  to reset')
     
     
 
@@ -41,5 +36,5 @@ page0.add(list = gui.nidos(cont_x, cont_y, cont_width, cont_height,  1, 6, super
 page0.list.of(0,2).set_purpose(togl_bright, (page0.list.of(0,2),) )
 page0.list.of(0,2).text = 'Brighness'
 
-page0.list.of(0,-2).set_purpose(restart_query, (page0))
+page0.list.of(0,-2).set_purpose(pop_up.summon, (page0, ctrl.reset, (), 'Restart Device?'))
 page0.list.of(0,-2).text = 'Restart'

@@ -17,7 +17,7 @@ from system.programs import settings as s
 import sys_config as sc
 
 sc.init_prog_name = 'settings'
-
+'''
 from system.programs import __pop_up__module as pp
 
 gui = pp.gui
@@ -26,12 +26,12 @@ cont = gui.window(pp.cont_x,pp.cont_y,pp.cont_width,pp.cont_height, background =
 x = cont.add_panel()
 cont.place()
 
-pp.summon_pop_up(x,print,('BridgeKeeper: Who would cross the bridge of death must answer me these questions three ere the other side he see',),'This is a MP pop up')
+pp.summon(x,print,('POP_UP: BridgeKeeper: Who would cross the bridge of death must answer me these questions three ere the other side he see',),'This is a MP pop up')
 
 
 #x.nav.move(1,0)
 x.nav.press()
 
-time.sleep(1)
+time.sleep(1)'''
 
 from system import sys_main
