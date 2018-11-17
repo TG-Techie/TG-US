@@ -9,6 +9,7 @@ these commits had the switcher: 823d71df1a2ddeef2c82163d846af495fa4a6dfa,
 #harware specific or user specific boot
 from gc import enable, collect, mem_free
 enable()
+import time
 collect()
 
 #try:
@@ -28,7 +29,6 @@ collect()
 
 #utilities
 from tg_modules.tg_tools import holder
-import time
 collect()
 
 #io
@@ -142,8 +142,10 @@ while 1:
                 else:
                     handler.load(init_prog)
             elif (cmd == 'S') and sys_config.settings_active:
-                print('slkjdnfka')
-                handler.load(sys_config.settings_prog, sys_config.settings_path)
+                if handler.cur_name == sys_config.settings_prog:
+                    pass
+                else:
+                    handler.load(sys_config.settings_prog, sys_config.settings_path)
                 
             handler.cur_cont.current.command(cmd)
     

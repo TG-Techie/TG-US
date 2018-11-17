@@ -3,7 +3,7 @@
 #Author: Jonah Yolles-Murphy on Date: 10/12/18
 
 from tg_modules.gui_modules.gui_base import selectable,navigable,gui_obj, io, behave
-import time
+import time, sys as traceback
 
 #button assignments:
 # up, down, left, right, enter
@@ -373,7 +373,10 @@ class panel(gui_obj):
                 try:
                     tup_pointer = self.cmd_dict[cur_val]
                     tup_pointer[0](*tup_pointer[1])
-                except: pass
+                except Exception as e:
+                    #traceback.print_exception(e)
+                    #print(e)
+                    pass
                 #except: raise KeyError("TG: either nav has no superior or given command has not assigned function")
                 
     #def add_cmd():

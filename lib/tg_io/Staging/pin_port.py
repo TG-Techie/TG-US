@@ -2,8 +2,9 @@
 #Attribution-NonCommercial 3.0 United States (CC BY-NC 3.0 US)
 #Author: Jonah Yolles-Murphy on Date: 10/12/18
 
-import board, busio
+import board, busio, time
 
+time.sleep(.1) 
 #metro m4 express:
 #['A0', 'A1', 'A2', 'A3', 'A4', 'A5', 'D0', 'RX', 'D1', 'TX', 'D2', 'D3',
 #'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'D12', 'D13', 'SDA',
@@ -32,3 +33,5 @@ disp_spi = busio.SPI(clock=board.SCK, MOSI=board.MOSI, MISO=board.MISO)
 #SD card extionstion from display
 SD_cs = board.D11
 SD_spi = disp_spi
+
+time.sleep(.1)

@@ -3,7 +3,7 @@
 #Author: Jonah Yolles-Murphy on Date: 10/31/18
 
 import sys_config as sc
-import time
+#import time
 
 '''from programs.user import example_ENT_SPC_SPC_SPC3 as ex
 ex.page.place()

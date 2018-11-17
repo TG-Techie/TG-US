@@ -26,6 +26,7 @@ def k2c(val):
 ###fill in harware reporint values##########
 
 def get_temp_c():
+    #print(mcp.temperature)
     return mcp.temperature
 
 def get_temp_f():

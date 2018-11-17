@@ -5,7 +5,7 @@
 from gc import collect as clean_mem
 import time
 #import pins
-from tg_io.staging.pin_port import disp_spi,disp_cs, disp_dc, disp_rst, backlight
+from tg_io.staging.pin_port import disp_cs, disp_dc, disp_rst, backlight, disp_spi
 clean_mem()
 # import easy digital io
 from tg_modules.make_ios import dio, pwm
