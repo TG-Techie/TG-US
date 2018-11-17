@@ -2,6 +2,13 @@
 #Attribution-NonCommercial 3.0 United States (CC BY-NC 3.0 US)
 #Author: Jonah Yolles-Murphy on Date: 10/17/18
 
+'''try:
+    from sys_config import DEBUG_module_locaiton_output as should_out
+except:
+    should_out = 0
+if should_out:
+    print('System Entered: ',__name__)'''
+
 #for errors, not currently implemented#from tg_io import io_screen as io # for error programs
 import sys_config
 from tg_modules.tg_tools import del_dict_value #ease of life thing
@@ -23,6 +30,7 @@ last_import_error = 'None'
 
 def load(name, path = sys_config.std_path, to_system = 0, place = 1):
     global system, programs, cur_prog, cur_cont, cur_name, last_import_error
+    #print(name)
     #print(cur_name)
     #print(cur_prog)
     #print([x[1] for x in system])
@@ -72,7 +80,7 @@ def load(name, path = sys_config.std_path, to_system = 0, place = 1):
         last_import_error = e
         traceback.print_exception(e)
         print('TG:there was a serious error loading a progam!')
-        sys.exit()
+        raise ImportError('')
         
         #exec('from '+path+' import ' + name )
     

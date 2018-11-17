@@ -2,6 +2,12 @@
 #Attribution-NonCommercial 3.0 United States (CC BY-NC 3.0 US)
 #Author: Jonah Yolles-Murphy on Date: 11/14/18
 
+try:
+    from code import should_out
+except:
+    should_out = 0
+if should_out:
+    print('System Entered: ',__name__)
 
 from tg_io.staging.mcp9808_setup import mcp
 

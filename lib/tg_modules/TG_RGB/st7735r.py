@@ -125,15 +125,16 @@ class ST7735R(DisplaySPI):
 
 
     #pylint: disable-msg=useless-super-delegation, too-many-arguments
-    def __init__(self, spi, dc, cs, rst=None, hardware_width=160, hardware_height=160, rotation = 0):
+    def __init__(self, spi, dc, cs, rst=None, hardware_width=160, hardware_height=160, rotation = 0, x_offset = 0, y_offset = 0):
         self.rotation = rotation
         if (rotation == 1) or (rotation == 3):
-            self.width = 160
-            self.height = 128
+            self.width = 160 - x_offset
+            self.height = 128 - y_offset
         else:
-            self.width = 128
-            self.height = 160
-        super().__init__(spi, dc, cs, rst, hardware_width, hardware_height,baudrate=1000000000,)
+            self.width = 128 - x_offset
+            self.height = 160 - y_offset
+        super().__init__(spi, dc, cs, rst, hardware_width, hardware_height,baudrate=1000000000,x_offset = x_offset, y_offset = y_offset)
+        
 
     def init(self):
         super().reset()

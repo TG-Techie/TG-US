@@ -11,7 +11,7 @@ value_for_bar = 0
 def get_val():
     global value_for_bar
     #for inti debug#return int(input('val:'))
-    print(value_for_bar)
+    #print(value_for_bar)
     return value_for_bar
 
 def incre_bar_val(target, valin):

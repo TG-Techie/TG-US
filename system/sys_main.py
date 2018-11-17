@@ -12,6 +12,13 @@ enable()
 import time
 collect()
 
+'''try:
+    from sys_config import DEBUG_module_locaiton_output as should_out
+except:
+    should_out = 0
+if should_out:
+    print('System Entered: ',__name__)'''
+
 #try:
 from programs.user import __boot  
 collect()

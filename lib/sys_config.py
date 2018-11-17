@@ -23,5 +23,6 @@ system_refresh_interval = 2
 
 use_keyboard = 0
 
+DEBUG_module_locaiton_output = 1
 
 # not implemented show_prog_error = 0

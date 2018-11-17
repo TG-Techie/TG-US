@@ -11,6 +11,10 @@ _last_id = 0
 
 class gui_obj():
     is_gui_obj = True
+    has_value = False
+    is_selectable = False
+    is_navigable = False
+    is_refreshable = False
     
     def _set_id(self):
         global _last_id

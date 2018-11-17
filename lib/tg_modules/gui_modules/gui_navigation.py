@@ -334,8 +334,9 @@ class panel(gui_obj):
                     
                     return getattr(self, key)
                 else:
-                    raise TypeError('TG: Suspected: tried to add a non gui object to panel')
-            except AttributeError: 
+                    raise TypeError('TG: Likely: tried to add a non gui object to panel')
+            except Exception as e: 
+                print(e)
                 raise TypeError('TG: Suspected: tried to add a non gui object to panel')
         return
                 

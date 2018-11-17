@@ -6,6 +6,14 @@
 #this means please do not change the line stating with define in this document
 #only change the contense of the functions to change what display is used
 
+'''try:
+    from sys_config import DEBUG_module_locaiton_output as should_out
+except:
+    should_out = 0
+if should_out:
+    print('System Entered: ',__name__)'''
+
+
 # my choosen screen libaray:
 from tg_io.staging.disp import disp,color as disp_color, backlite
 

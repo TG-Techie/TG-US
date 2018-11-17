@@ -73,15 +73,18 @@ class Display: #pylint: disable-msg=no-member
     _ENCODE_POS = ">HH"
     _DECODE_PIXEL = ">BBB"
 
-    def __init__(self, hardware_width, hardware_height, font = None):
+    def __init__(self, hardware_width, hardware_height, font = None, x_offset = 0, y_offset = 0):
         #hardware_width and height are for to the dram buffer size
-        self.hardware_width = hardware_width
-        self.hardware_height = hardware_height
+        self.hardware_width = hardware_width 
+        self.hardware_height = hardware_height 
         if font == None:
             from TG_Modules.TG_Fonts.font_01 import text_dict
         self.text_dict = text_dict
+        self.x_offset = x_offset
+        self.y_offset = y_offset
         self.color_depth = 2
         self.init()
+        self.rect(-x_offset, -y_offset, hardware_width, hardware_height, 0)
 
     def init(self):
         #"""Run the initialization commands."""
@@ -121,6 +124,8 @@ class Display: #pylint: disable-msg=no-member
         clean_mem()
 
     def pixel(self, x, y, color=None):
+        x += self.x_offset 
+        y += self.y_offset
         """Read or write a pixel at a given position."""
         if color is None:
             return self._decode_pixel(self._block(x, y, x, y))
@@ -133,6 +138,8 @@ class Display: #pylint: disable-msg=no-member
 
     #pylint: disable-msg=too-many-arguments
     def rect(self, x, y, width, height, color):
+        x += self.x_offset 
+        y += self.y_offset
         x = min(self.hardware_width - 1, max(0, x))
         y = min(self.hardware_height - 1, max(0, y))
         hardware_width = min(self.hardware_width - x, max(1, width))
@@ -163,6 +170,8 @@ class Display: #pylint: disable-msg=no-member
         self.rect(x, y, 1, height, color)
 
     def text_dimension(self,xin,yin,text,size = 1):
+        xin += self.x_offset 
+        yin += self.y_offset
         max_width = 0
         cur_width = 0
         line_count = 1
@@ -221,6 +230,8 @@ class Display: #pylint: disable-msg=no-member
         return self.color_depth*(grid_width*y + x)
 
     def text(self,xin,yin,text,color = color_white, background = color_black, size = 1, rect_extension = 0, italics = 0):
+        xin += self.x_offset 
+        yin += self.y_offset
         comp_list = []
         enter_stat = False
         if type(text) != list:
@@ -286,7 +297,7 @@ class Display: #pylint: disable-msg=no-member
         #put text as block
         self._block(xin , yin+1 , xin-1+ width*size +italics, yin-1+ height*size +1, array)
         try:
-            self.text(xin,yin+1+rect_extension+7*size,next_text,
+            self.text(xin - self.x_offset ,yin - self.y_offset +1+rect_extension+7*size,next_text,
                                       color = color,
                                       background = background, size = size,
                                       rect_extension = rect_extension,
@@ -346,7 +357,9 @@ class Display: #pylint: disable-msg=no-member
 class DisplaySPI(Display):
     #"""Base class for SPI type devices"""
     #pylint: disable-msg=too-many-arguments
-    def __init__(self, spi, dc, cs, rst=None, hardware_width=1, hardware_height=1, baudrate=12000000, polarity=0, phase=0):
+    def __init__(self, spi, dc, cs, rst=None, hardware_width=1, hardware_height=1, baudrate=12000000, polarity=0, phase=0, x_offset = 0, y_offset = 0):
+        
+        #spi device
         self.spi_device = spi_device.SPIDevice(spi, cs, baudrate=baudrate,
                                                polarity=polarity, phase=phase)
         self.dc_pin = dc
@@ -355,7 +368,9 @@ class DisplaySPI(Display):
         if self.rst:
             self.rst.switch_to_output(value=0)
             self.reset()
-        super().__init__(hardware_width, hardware_height)
+        
+        #disp device
+        super().__init__(hardware_width, hardware_height, x_offset = x_offset, y_offset = y_offset)
     #pylint: enable-msg=too-many-arguments
 
     def reset(self):

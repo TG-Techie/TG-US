@@ -2,6 +2,14 @@
 #Attribution-NonCommercial 3.0 United States (CC BY-NC 3.0 US)
 #Author: Jonah Yolles-Murphy on Date: 10/26/18
 
+'''try:
+    from sys_config import DEBUG_module_locaiton_output as should_out
+except:
+    should_out = 0
+if should_out:
+    print('System Entered: ',__name__)'''
+    
+    
 #from system.programs.__blank__app import *
 from system.programs.__blank__app import init
 from gc import collect
