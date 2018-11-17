@@ -24,7 +24,10 @@ def togl_bright(target):
     gui.io.set_backlight( val )
     target.text = 'Brightness:'+str(round(val*5))+'/5'
     
-    
+def enter_bootloader():
+    global ctrl
+    ctrl.on_next_reset(ctrl.RunMode.BOOTLOADER)
+    ctrl.reset()
 
 #1st main panel for the menu
 page0 = container.add_panel()
@@ -38,3 +41,11 @@ page0.list.of(0,2).text = 'Brighness'
 
 page0.list.of(0,-2).set_purpose(pop_up.summon, (page0, ctrl.reset, (), 'Restart Device?'))
 page0.list.of(0,-2).text = 'Restart'
+
+page0.list.of(0,-1).set_purpose(pop_up.summon, (page0, enter_bootloader, (), """Update Firmware:
+ - The device will
+  enter bootloader
+  mode:
+  download the latest
+  firmware online"""))
+page0.list.of(0,-1).text = 'Update Firmware'

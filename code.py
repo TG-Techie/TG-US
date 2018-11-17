@@ -4,7 +4,7 @@
 
 import time
 
-'''from sys_config import DEBUG_module_locaiton_output as should_out
+"""'''from sys_config import DEBUG_module_locaiton_output as should_out
 if should_out:
     print('System Entered: ',__name__)'''
 #print(tc.get_image())
@@ -32,6 +32,6 @@ pp.summon(x,print,('POP_UP: BridgeKeeper: Who would cross the bridge of death mu
 #x.nav.move(1,0)
 x.nav.press()
 
-time.sleep(1)'''
+time.sleep(1)'''"""
 
 from system import sys_main
