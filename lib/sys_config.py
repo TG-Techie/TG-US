@@ -13,6 +13,8 @@ init_prog_name = 'launcher'
 #show it in the app loaded apps
 init_prog_index = False
 
+military_time = 0
+
 settings_active = 1
 settings_prog = 'settings'
 settings_path = 'system.programs'

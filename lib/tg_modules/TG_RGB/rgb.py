@@ -318,7 +318,7 @@ class Display: #pylint: disable-msg=no-member
                                       italics = italics)
         except NameError:
             pass
-        del xin,yin,comp_list, enter_stat, text, next_x_end, next_text, width, height, array, array_out,x_pos, y_pos, pos, pos0
+        del xin,yin,comp_list, enter_stat, text, width, height, array_out, x_pos, y_pos
         clean_mem()
             
 
@@ -368,7 +368,7 @@ class Display: #pylint: disable-msg=no-member
         for j in reversed(range(r)):
             self.hline(x+gap_list[j],y+height-j-1,width - 2*gap_list[j],color)
         del gap_list
-        #clean_mem()
+        clean_mem()
 
 class DisplaySPI(Display):
     #"""Base class for SPI type devices"""

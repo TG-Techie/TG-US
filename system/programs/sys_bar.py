@@ -11,7 +11,7 @@ if should_out:
 
 from tg_modules import tg_gui as gui
 import sys_gui_params as params
-import random, time
+import random, time, sys_config
 from tg_io import io_battery as bat
 from gc import collect 
 
@@ -52,11 +52,11 @@ def place_bat(valin = None):
         gui.io.text(text_width , y + 1, '  ')
 
 def change_bar_text(target):
-    global place_bat
+    global place_bat, sys_config
     #time section
     current = time.localtime()
     #config hour
-    hour = num_2_time(current[3])
+    hour = num_2_time(current[3] % (12 +12*sys_config.military_time ))
     
     #config minute
     minu = num_2_time(current[4])

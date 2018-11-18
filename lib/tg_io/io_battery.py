@@ -4,13 +4,13 @@
 
 import random
 
-temp = 100.4
+temp = 100.33333333333333333333333333333333333333333
 def get_percentage():
     global temp
     temp = (temp -.333) % 101
     return temp/100
 
 def is_charging():
-    val = random.choice([True,False,False,False,False,False,False,False,False])
+    val = random.choice([True, False,False,False,False,False,False,False,False])
     #print(val)
     return val
