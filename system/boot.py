@@ -18,7 +18,7 @@ K. Keough   Martin Y.
 Joseph M.  Arlene Y.
 J. Podel   J. Whalen''', size = 1 )
 
-time.sleep(1)
+time.sleep(.25)
 
 del time, disp
 
