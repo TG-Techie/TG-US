@@ -29,6 +29,9 @@ height15 = (cont_height/9)
 pop_up = gui.panel(int(cont_x + width17), int(cont_y + height15), 
                     int(cont_width - width17*2), int(cont_height - height15*2), background = gui.io.blue)
 
+pop_up.add( rect = gui.rect(int(cont_x + width17), int(cont_y + height15), 
+                    int(cont_width - width17*2), int(cont_height - height15*2), gui.io.blue))
+
 #test for popup
 pop_up.add( text = gui.text(int(cont_x + width17), int(cont_y + height15), 
                     int(cont_width - width17*2), int(cont_height - height15*4), 'this is a pop up',background = gui.io.blue) )

@@ -29,6 +29,16 @@ def enter_bootloader():
     ctrl.on_next_reset(ctrl.RunMode.BOOTLOADER)
     ctrl.reset()
 
+def togl_OWO(button):
+    global container
+    try:
+        from tg_io import io_screen
+        io_screen.OWO = not io_screen.OWO
+        button.text = 'OWO: ' + ['OFF','ON'][io_screen.OWO]
+        container.place()
+    except:
+        button.text = 'OWO Unsupported'
+
 #1st main panel for the menu
 page0 = container.add_panel()
 
@@ -49,3 +59,6 @@ page0.list.of(0,-1).set_purpose(pop_up.summon, (page0, enter_bootloader, (), """
   download the latest
   firmware online"""))
 page0.list.of(0,-1).text = 'Update Firmware'
+
+page0.list.of(0,-3).set_purpose(togl_OWO, (page0.list.of(0,-3),) )
+page0.list.of(0,-3).text = 'OWO'
