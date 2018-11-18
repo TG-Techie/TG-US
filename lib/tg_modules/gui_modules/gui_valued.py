@@ -178,7 +178,7 @@ class value_bar(valued):
             
         #place value bar
         io.if_rect(self.x + self.border*2, self.y + 2*self.border,
-                    val_width + self.radius*2, 
+                    val_width + (self.radius-self.border)*2, 
                     self.height- 4*self.border ,
                     self.radius - 2*self.border, 
                     self.color)

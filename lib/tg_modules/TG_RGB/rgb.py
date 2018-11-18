@@ -318,6 +318,8 @@ class Display: #pylint: disable-msg=no-member
                                       italics = italics)
         except NameError:
             pass
+        del xin,yin,comp_list, enter_stat, text, next_x_end, next_text, width, height, array, array_out,x_pos, y_pos, pos, pos0
+        clean_mem()
             
 
     def scroll(self,x,y,str, color = colorst(255,255,255), background = None, size = 1):
