@@ -25,14 +25,17 @@ collect()
 #except:
 #    pass
 
+
+
 #harware specific inits (like setting rtcs and other stuff)
+#and boot up name and sterf
 from programs.stock import __boot  
 collect()
 
-
-# system boor (rtc and other stuff)
+#system  boot up screen
 from system.boot import *
 collect()
+
 
 #utilities
 from tg_modules.tg_tools import holder

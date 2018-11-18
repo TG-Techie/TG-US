@@ -4,14 +4,6 @@
 
 import time, sys
 
-from tg_io.io_screen import disp
 
-try:
-    disp.text(0,0,'TGT', size =2  )
-except Exception as e:
-    sys.print_exception(e)
-    print(e)
-    print('failed')
-
-#time.sleep(10000000000)
+#time.sleep(100)
 from system import sys_main
