@@ -275,11 +275,11 @@ class Display: #pylint: disable-msg=no-member
             if len(text):
                 text.pop(0)
         clean_mem()
-        width = len(comp_list)*size 
-        height = self.text_dict['Height']*size
-        sq_size = size**2
+        width = len(comp_list)
+        height = self.text_dict['Height']
+        
         global array
-        array = bytearray(width * height * sq_size *self.color_depth )# 2 if for color depth
+        array = bytearray(width * height  *self.color_depth )# 2 if for color depth
         for x_pos in range(width): #cycle through stripes
             for y_pos in (range(height)): # cycle through bits in stripes
                         #calc 1st bit position
@@ -294,8 +294,22 @@ class Display: #pylint: disable-msg=no-member
                             array[pos+self.color_depth-1-byte_offset] = ((cur_color) >> byte_offset*8) & 255 #(0b11111111)
         #put background around
         self.rect(xin , yin, width +1, height +1 + rect_extension, background)
-        #put text as block
-        self._block(xin , yin+1 , xin-1+ width*size +italics, yin-1+ height*size +1, array)
+        #print(width, height)
+        if size > 1:
+            array_out = bytearray(0)
+            for y_pos in range(height*2):# for row in array
+                for i in range(size): # add multiple lines
+                    row_array = bytearray(0)
+                    for x_pos in range(int(width)):# for pixel in row
+                        pos0 = width*2*y_pos + x_pos*2
+                        #print(pos0)
+                        array_out += array[pos0 : pos0+2]*size
+                    array_out += row_array*size
+                
+        else:
+            array_out = array
+            
+        self._block(xin , yin+1 , xin-1+ width*size +italics, yin-1+ height*size +1, array_out)
         try:
             self.text(xin - self.x_offset ,yin - self.y_offset +1+rect_extension+7*size,next_text,
                                       color = color,

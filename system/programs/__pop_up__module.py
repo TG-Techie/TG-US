@@ -50,7 +50,7 @@ pop_up.yes_no.of(0,0).text = 'YES'
 pop_up.yes_no.of(1,0).set_purpose(return_to_parent, (None))
 pop_up.yes_no.of(1,0).text = 'NO'
 
-def summon(target, yes_func, yes_tup, message):
+def summon(target, yes_func, yes_tup, message, but1_text = 'YES', but2_text = 'NO'):
     global pop_up,return_to_parent
     
     #set message
