@@ -13,19 +13,8 @@ import time
 from microcontroller import reset
 collect()
 
-'''try:
-    from sys_config import DEBUG_module_locaiton_output as should_out
-except:
-    should_out = 0
-if should_out:
-    print('System Entered: ',__name__)'''
-
-#try:
 from programs.user import __boot  
 collect()
-#except:
-#    pass
-
 
 
 #harware specific inits (like setting rtcs and other stuff)
@@ -59,7 +48,7 @@ from system import handler_uni as handler
 #config and behavior
 import sys_config# (in lib)
 
-init_prog = sys_config.init_prog_name
+home_prog = sys_config.home_prog_name
 collect()
 
 
@@ -75,9 +64,9 @@ system.add('sys_bar',
 
 ###THE launcher####################################################################################
 #import the inti program (usually launcher to the )
-system.add( init_prog, handler.load( sys_config.init_prog_name, 
-                                                    sys_config.init_prog_path, 
-                                                    not sys_config.init_prog_index))
+system.add( home_prog, handler.load( sys_config.home_prog_name, 
+                                                    sys_config.home_prog_path, 
+                                                    not sys_config.home_prog_index))
 
 
 
@@ -127,7 +116,7 @@ while 1:
                 #try:
                     if cmd == 'h':
                         collect()
-                        handler.load(init_prog)
+                        handler.load(home_prog)
                     try:
                         cmd_list.append({'w':'^', 'a':'<', 's':'V', 'd':'>', 'e':'E', 'p':'S'}[cmd[0]])
                     except:
@@ -148,11 +137,11 @@ while 1:
                     print(cmd)
                 if cmd == 'H':  
                     collect()
-                    if handler.cur_prog == system.get(init_prog):
+                    if handler.cur_prog == system.get(home_prog):
                         pass # open app switcher
                         #print('smap')
                     else:
-                        handler.load(init_prog)
+                        handler.load(home_prog)
                 elif (cmd == 'S') and sys_config.settings_active:
                     if handler.cur_name == sys_config.settings_prog:
                         pass

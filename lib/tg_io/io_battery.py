@@ -4,7 +4,7 @@
 
 import random
 
-temp = 100.33333333333333333333333333333333333333333
+temp = 100
 def get_percentage():
     global temp
     temp = (temp -.333) % 101

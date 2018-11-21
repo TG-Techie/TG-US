@@ -11,27 +11,36 @@ time.sleep(.1)
 #'SCL', 'AREF', 'NEOPIXEL', 'SCK', 'MOSI', 'MISO', 'LED_RX', 'LED_TX']
 
 #i2c
-sda = board.SDA
-scl = board.SCL
-i2c_port = busio.I2C(scl, sda)
+try:
+    sda = board.SDA
+    scl = board.SCL
+    i2c_port = busio.I2C(scl, sda)
+except:
+    print('TG:HW: unable to create i2c port')
 
 #uart port for gps
-gps_tx = board.TX
-gps_rx = board.RX
-uart_port = busio.UART(gps_tx, gps_rx, baudrate=9600, timeout=3000)
+try:
+    gps_tx = board.TX
+    gps_rx = board.RX
+    uart_port = busio.UART(gps_tx, gps_rx, baudrate=9600, timeout=3000)
+except:
+    print('TG:HW: unable to create uart port')
 
 #spi for display
-backlight = board.D9
-disp_sck = board.SCK
-disp_mosi = board.MOSI
-disp_miso = board.MISO
-disp_cs = board.D8
-disp_dc = board.D7
-disp_rst = board.D10
-disp_spi = busio.SPI(clock=board.SCK, MOSI=board.MOSI, MISO=board.MISO)
+try:
+    backlight = board.D9
+    disp_sck = board.SCK
+    disp_mosi = board.MOSI
+    disp_miso = board.MISO
+    disp_cs = board.D8
+    disp_dc = board.D7
+    disp_rst = board.D10
+    disp_spi = busio.SPI(clock=board.SCK, MOSI=board.MOSI, MISO=board.MISO)
+except:
+    print('TG:HW: unable to create DISP SPI port')
 
 #SD card extionstion from display
-SD_cs = board.D11
-SD_spi = disp_spi
+#SD_cs = board.D11
+#SD_spi = disp_spi
 
 time.sleep(.1)

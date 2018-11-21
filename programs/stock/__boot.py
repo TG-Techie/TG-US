@@ -13,5 +13,3 @@ Serial: N/A''', size = 1 )
 
 
 import sys_config as sc
-
-from tg_io import io_rtc as rtc

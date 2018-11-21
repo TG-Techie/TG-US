@@ -7,11 +7,11 @@ enable_nav_bar = 0
 
 std_path = 'programs'
 
-init_prog_path = 'system.programs'
-init_prog_name = 'launcher'
+home_prog_path = 'system.programs'
+home_prog_name = 'launcher'
 #VV this VV is weather the prog should be put in system and hidden from the user or:
 #show it in the app loaded apps
-init_prog_index = False
+home_prog_index = False
 
 military_time = 0
 
@@ -21,7 +21,7 @@ settings_path = 'system.programs'
 
 prog_path = 'programs.user'
 
-system_refresh_interval = 2
+system_refresh_interval = 3
 
 use_keyboard = 0
 
