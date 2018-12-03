@@ -20,9 +20,9 @@ except:
 
 #uart port for gps
 try:
-    gps_tx = board.TX
-    gps_rx = board.RX
-    uart_port = busio.UART(gps_tx, gps_rx, baudrate=9600, timeout=3000)
+    utx = board.TX
+    urx = board.RX
+    uart_port = busio.UART(utx, urx, baudrate=9600, timeout=3000)
 except:
     print('TG:HW: unable to create uart port')
 
