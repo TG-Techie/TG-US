@@ -10,23 +10,27 @@ these commits had the switcher: 823d71df1a2ddeef2c82163d846af495fa4a6dfa,
 from gc import enable, collect, mem_free
 enable()
 import time
-from microcontroller import reset
+from supervisor import reload
 collect()
 
-from programs.user import __boot  
+#######################inits########################user and stock
+try:
+    from programs.user import __boot  
+except: pass
 collect()
 
-
-#harware specific inits (like setting rtcs and other stuff)
-#and boot up name and sterf
-from programs.stock import __boot  
+try:
+    from programs.stock import __boot  
+except: pass
 collect()
 
+############system bootup screen#######################
 #system  boot up screen
 from system.boot import *
 collect()
 
 
+######setting up system#####################
 #utilities
 from tg_modules.tg_tools import holder
 collect()
@@ -39,25 +43,23 @@ except:
     button_active = 0
 collect()
 
-#prog handler
-#***handler uni only ever allows one program to be loaded!
-#thus the switcher should be turned of or not implemented
-#from system import handler_no_lap_uni as handler
 from system import handler_uni as handler
 
-#config and behavior
-import sys_config# (in lib)
+import sys_config
 
 home_prog = sys_config.home_prog_name
 collect()
 
+if sys_config.use_keyboard:
+    print('TG: keyboard active! use wasd and e keys')
 
 #for ease of code / system container
 system = holder()
 
 
 #initial sys_bar setup
-system.add('sys_bar', 
+if sys_config.enable_sys_bar:
+    system.add('sys_bar', 
                     handler.load('sys_bar', path  = 'system.programs',
                     to_system = True, place = 1))
 #handler.cur_cont.place()
@@ -78,10 +80,6 @@ while 1:
     try:
         #print(mem_free())
         collect()
-
-        '''if not hasattr(handler.cur_prog, 'validation_ticket'):
-            print('marbles')
-            handler.load('error_load_prog','system.programs')'''
         
         time.sleep(.1)
         if time.monotonic() - last_sys_refresh >= sys_config.system_refresh_interval:
@@ -90,14 +88,13 @@ while 1:
                 
             last_sys_refresh = time.monotonic()
         
-        #print('checking if shoulf refresh system')
-        #print(handler.cur_prog)
         if handler.cur_prog.wants_refresh:
             handler.cur_cont.refresh()
-            
         
+        #inputed commands
         cmd_list = []
         
+        #interpert keyboard as button inputs
         if sys_config.use_keyboard:
             valin = str(input('your cmd(wasd):')).lower()
             #print(valin[0:5])
@@ -125,13 +122,14 @@ while 1:
                 #except:
                     #print('err')
         
-        #get cap touched buttons
+        #get pressed buttons
         if button_active:
             cmd_list += button.get_commands()
         
+        #do touch system refresh here:
+        #not implemented!
         
-        #print(cmd_list)
-        #print(cmd_list)
+        #interpret commands
         for cmd in cmd_list:
                 if sys_config.use_keyboard: # debug 
                     print(cmd)
@@ -155,11 +153,9 @@ while 1:
         
         del cmd_list
     except MemoryError:
-        from tg_io.io_screen import disp
-        #disp.text(0,0,''''MemoryError:
-#Rebooting''')
+        print('memory error! this is going to be fixed but currently is not')
         try:
             handler.cur_prog._save()
         except: pass
-        reset()
+        reload()
     #time.sleep(.05)

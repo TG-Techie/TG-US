@@ -4,9 +4,10 @@
 
 import sys_config
 
-#########for testing and debugging################
-#sys_config.init_prog_path = 'programs.stock'
-#sys_config.init_prog_name = 'Therm_ENT_SPCCam'
+#####change these to tell the system what program you want to load!
+#don't change to open a springboard launcher
+sys_config.home_prog_path = 'programs.user' 
+sys_config.home_prog_name = 'Hello_ENTWorld'
 
-#sys_config.use_keyboard = 0
-#############################
+#how to config if you want to use the repl to pass commands
+sys_config.use_keyboard = 0

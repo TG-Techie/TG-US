@@ -80,7 +80,10 @@ def load(name, path = sys_config.std_path, to_system = 0, place = 1):
         last_import_error = e
         traceback.print_exception(e)
         print('TG:there was a serious error loading a progam!')
-        raise ImportError('')
+        raise ImportError('''TG: 2 options of cause:
+(1): there is an error in the module(scroll up to see)
+(2): named module does not exist
+THIS is the module:'''+path+'.'+name)
         
         #exec('from '+path+' import ' + name )
     

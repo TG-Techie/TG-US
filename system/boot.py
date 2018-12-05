@@ -18,9 +18,9 @@ K. Keough   Martin Y.
 Joseph M.  Arlene Y.
 J. Podel   J. Whalen''', size = 1 )
 
-time.sleep(.25)
+time.sleep(.1)
 
-del time, disp
-
-#r = RTC()
-#rtc.set_time_source(r)
+#del time, disp
+'''
+from tg_io import io_rtc
+print(time.localtime())'''
