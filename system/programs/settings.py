@@ -11,6 +11,7 @@ if should_out:
 
 
 from system.programs.__blank__app import init
+from tg_io import io_screen as disp
 exec(init)
 
 import sys_config, microcontroller as ctrl, system.programs.__pop_up__module as pop_up
@@ -25,7 +26,11 @@ def togl_bright(target):
     target.text = 'Brightness:'+str(round(val*5))+'/5'
     
 def enter_bootloader():
-    global ctrl
+    global ctrl, disp
+    disp.fill(0)
+    disp.text(10,10,'''Bootloader
+Mode
+Entered''',size = 2)
     ctrl.on_next_reset(ctrl.RunMode.BOOTLOADER)
     ctrl.reset()
 

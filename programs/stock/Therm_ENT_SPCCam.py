@@ -4,6 +4,9 @@
 
 from system.programs.__blank__app import init
 exec(init)
+#print(gui.modules, dir(gui), dir())
+gui.add_module('gui_thermal_cam')
+#print(gui.modules, dir(gui), dir())
 wants_refresh = True
 
 from tg_io.io_thermal_cam import get_image, units
