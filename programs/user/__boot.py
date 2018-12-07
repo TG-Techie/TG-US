@@ -6,8 +6,8 @@ import sys_config
 
 #####change these to tell the system what program you want to load!
 #don't change to open a springboard launcher
-sys_config.home_prog_path = 'programs.user' 
-sys_config.home_prog_name = 'Hello_ENTWorld'
+#sys_config.home_prog_path = 'programs.user' 
+#sys_config.home_prog_name = 'Hello_ENTWorld'
 
 #how to config if you want to use the repl to pass commands
 sys_config.use_keyboard = 0

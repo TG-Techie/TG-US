@@ -17,7 +17,7 @@ exec(init)
 import sys_config, microcontroller as ctrl, supervisor,system.programs.__pop_up__module as pop_up
 
 
-(.2,.4,.5,.8,1)
+#(.2,.4,.5,.8,1)
 def togl_bright(target):
     val = ((gui.io.get_backlight() - .2) % 1)
     if not val:
@@ -39,11 +39,11 @@ def togl_OWO(button):
     try:
         from tg_io import io_screen
         io_screen.OWO = not io_screen.OWO
-        button.text = 'OWO: ' + ['OFF','ON'][io_screen.OWO]
+        button.text = 'Mystery: ' + ['OFF','ON'][io_screen.OWO]
         container.place()
         print('https://chrome.google.com/webstore/detail/owo/jolaggjkdhhgcdhcjjhfkkbllefoggob')
     except:
-        button.text = 'OWO Unsupported'
+        button.text = 'Mystery Unsupported'
 
 #1st main panel for the menu
 page0 = container.add_panel()
@@ -52,8 +52,8 @@ page0 = container.add_panel()
 page0.add(list = gui.nidos(cont_x, cont_y, cont_width, cont_height,  1, 6, superior = page0))
 
 
-page0.list.of(0,1).set_purpose(togl_bright, (page0.list.of(0,2),) )
-page0.list.of(0,1).text = 'Brighness'
+page0.list.of(0,1).set_purpose(togl_bright, (page0.list.of(0,1),) )
+page0.list.of(0,1).text = 'Brightness'
 
 page0.list.of(0,-3).set_purpose(pop_up.summon, (page0, supervisor.reload, (), 'Restart Device?'))
 page0.list.of(0,-3).text = 'Restart'
@@ -69,5 +69,5 @@ page0.list.of(0,-1).set_purpose(pop_up.summon, (page0, enter_bootloader, (), """
   firmware online"""))
 page0.list.of(0,-1).text = 'Update Firmware'
 
-page0.list.of(0,-4).set_purpose(togl_OWO, (page0.list.of(0,-3),) )
+page0.list.of(0,-4).set_purpose(togl_OWO, (page0.list.of(0,-4),) )
 page0.list.of(0,-4).text = 'Mystery'

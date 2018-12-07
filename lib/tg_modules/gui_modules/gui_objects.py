@@ -69,9 +69,8 @@ class text(valued):
         self.top_down = top_down
         self.clip_top = clip_top
         
-        #errors
-        #dims = io.text_dimensions(0,0,'   /n   ', size)
-        dims = (5*3*self.size + self.size*3 ,7*2*self.size + self.size*2)# temp error fix
+        #the width and height of one character
+        dims = (5*3*self.size + self.size*3 ,7*2*self.size + self.size*2)
         self.char_width = int(dims[0]/3)
         self.char_height = int(dims[1]/2)
         #print(self.char_width, self.char_height)
@@ -80,10 +79,12 @@ class text(valued):
         self._value = ' '
         self._color = color
         
-        #define possbile cols and chars of text
+        #define possbile cols and chars of text and x and y
+        #x,y pos of text
         self._textx = self.x + self.border
         self._texty = self.y + self.border
         
+        #number fo rows and cols
         self._text_cols = floor((self.width - self.border*2 - 1)/self.char_width)
         self._text_rows = floor((self.height - self.border*2 -1 )/self.char_height) -1
         #print(self._text_cols)
@@ -175,5 +176,27 @@ class text(valued):
         io.text(self.x + self.border,self.y + 1 + self.border, self.value, color = self.color,
                 background = self.background)
 
-#def cmd_box():
+class scrolling_text(text):
+    is_refreshable = False
+    
+    def __init__(self,x,y,width,height, value , direction  = 1,delay = 0,color = io.white, size = 1, border = 0, place = behave.should_place,
+                top_down = 1, clip_top = 1, color_clear = io.background_color, background = io.black):
+        super().__init__(x,y,width,height, value , color, size,
+                            border, place, top_down, clip_top, color_clear, background)
+        
+        self.direction = direction
+        
+        self.cur_str = value+' '*((self._text_cols-len(value))+delay)#+value
+        self.vaule = self.cur_str
+    
+    def refresh(self):
+        
+        split_str = list(self.cur_str)
+        
+        if self.direction > 0:
+            self.cur_str = ''.join([split_str.pop(-1)] + split_str)
+        else:
+            self.cur_str = ''.join(split_str[1:]+[split_str.pop(0)])
+        
+        self.value = self.cur_str
     
