@@ -45,6 +45,11 @@ def colorst(r, g, b):
     #same input as color565 but calculated like bgr
     #    this is for the st7735r display
     return (b & 0xf8) << 8 | (g & 0xfc) << 3 | r >> 3
+    
+def colorili(r, g, b):
+    #same input as color565 but calculated like bgr
+    #    this is for the st7735r display
+    return (b & 0xf8) << 8 | (g & 0xfc) << 3 | r >> 3
 
 color_white = colorst(255,255,255)
 color_black = 0
