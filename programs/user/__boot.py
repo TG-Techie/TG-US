@@ -10,4 +10,3 @@ import sys_config
 #sys_config.home_prog_name = 'Hello_ENTWorld'
 
 #how to config if you want to use the repl to pass commands
-sys_config.use_keyboard = 0
