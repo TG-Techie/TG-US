@@ -93,6 +93,8 @@ class ILI9341(DisplaySPI):
         super().__init__(spi, dc, cs, rst=rst, hardware_width=hardware_width, hardware_height=hardware_height,
                          baudrate=baudrate, polarity=polarity, phase=phase)
         self._scroll = 0
+        self.width = self.hardware_width
+        self.height = self.hardware_height
     #pylint: enable-msg=too-many-arguments
 
     def scroll(self, dy=None): #pylint: disable-msg=invalid-name
