@@ -17,10 +17,11 @@ def move_right(target, text):
 
 my_page = container.add_panel()
 
+
+
 my_page.add(my_text = gui.text(cont_x,  cont_height - 20, cont_width,  20, 'I should not be scrolling'))
 
 
 my_page.add(my_s_text = gui.scrolling_text(cont_x,  cont_height - 40, cont_width,  20 ,'I should be scrolling',direction  = -1, delay = 10))
 
-#add an on_refresh gui object my_page the executes the move_right method on the input of VVV that tuple 
-#my_page.add(my_mover = gui.on_refresh(move_right,(my_page.my_text,'is this scrolling?',)))
+my_page.add(my_s_text = gui.scrolling_text(cont_x,  cont_height - 60, cont_width,  20 ,'And I forwards',direction  = 1, delay = 10))

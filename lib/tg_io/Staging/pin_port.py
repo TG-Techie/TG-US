@@ -39,8 +39,10 @@ try:
 except:
     print('TG:HW: unable to create DISP SPI port')
 
-#SD card extionstion from display
-#SD_cs = board.D11
-#SD_spi = disp_spi
+try:
+    spkr = board.A1
+    spkr_en = board.A2
+except:
+    print('TG:HW: unable to create spkr pins')
 
 time.sleep(.1)

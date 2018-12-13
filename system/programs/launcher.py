@@ -90,8 +90,10 @@ next_prog = 0
 for page_num in range(num_pages):
     pan_pointer = container.add_panel('page' + str(page_num))
     
+    
+    num_spaces  = int(gui.io.screen_width/6)-18
     pan_pointer.add( label = gui.text(label_x, label_y, label_width,
-                    label_height, 'Applets:       Page:' + str(page_num + 1) + '/' + str(num_pages),
+                    label_height, 'Applets:'+' '*num_spaces+'Page:' + str(page_num + 1) + '/' + str(num_pages),
                     border = label_border))
     
     #print('the given object:')
