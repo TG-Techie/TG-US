@@ -9,7 +9,7 @@ from adafruit import adafruit_mpr121
 
 # Create MPR121 class.
 cap0 = adafruit_mpr121.MPR121(i2c_port)
-#cap1 = adafruit_mpr121.MPR121(i2c_port, address=0x91)
+cap1 = adafruit_mpr121.MPR121(i2c_port, address=91)
 
 # Note you can optionally change the address of the device:
 #mpr121 = adafruit_mpr121.MPR121(i2c, address=0x91)

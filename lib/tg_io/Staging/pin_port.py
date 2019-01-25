@@ -3,8 +3,9 @@
 #Author: Jonah Yolles-Murphy on Date: 10/12/18
 
 import board, busio, time
+from tg_modules import make_ios as mkio
 
-time.sleep(.1) 
+time.sleep(.1)
 #metro m4 express:
 #['A0', 'A1', 'A2', 'A3', 'A4', 'A5', 'D0', 'RX', 'D1', 'TX', 'D2', 'D3',
 #'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'D12', 'D13', 'SDA',
@@ -15,16 +16,18 @@ try:
     sda = board.SDA
     scl = board.SCL
     i2c_port = busio.I2C(scl, sda)
-except:
+except Exception as e:
     print('TG:HW: unable to create i2c port')
+    print(e)
 
 #uart port for gps
 try:
     utx = board.TX
     urx = board.RX
     uart_port = busio.UART(utx, urx, baudrate=9600, timeout=3000)
-except:
+except Exception as e:
     print('TG:HW: unable to create uart port')
+    print(e)
 
 #spi for display
 try:
@@ -36,13 +39,16 @@ try:
     disp_dc = board.D7
     disp_rst = board.D10
     disp_spi = busio.SPI(clock=board.SCK, MOSI=board.MOSI, MISO=board.MISO)
-except:
+except Exception as e:
     print('TG:HW: unable to create DISP SPI port')
+    print(e)
 
 try:
     spkr = board.A1
-    spkr_en = board.A2
-except:
+    spkr_en_pin = board.A2
+    spkr_en = mkio.dio(spkr_en_pin, 0)
+except Exception as e:
     print('TG:HW: unable to create spkr pins')
+    print(e)
 
 time.sleep(.1)
