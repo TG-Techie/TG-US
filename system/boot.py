@@ -6,9 +6,10 @@
 
 import time
 from tg_io.io_screen import disp
-from tg_io.staging.pin_port import spkr_en
+from tg_io.staging.pin_port import spkr_en, spkr
 
-spkr_en.value = 0
+spkr_en.value = 1
+spkr.play_wav('system/audio_files/looping.wav')
 
 disp.text(0,6*8,'''--------
 TG-US Version: ''' + str(0)+'''
@@ -20,6 +21,9 @@ Thanks To:
 K. Keough   Martin Y.
 Joseph M.  Arlene Y.
 J. Podel   J. Whalen''', size = 1 )
+
+#spkr.play_wav('system/audio_files/looping.wav')
+spkr_en.value = 0
 
 #time.sleep(.25)
 

@@ -15,12 +15,12 @@ collect()
 
 #######################inits########################user and stock
 try:
-    from programs.user import __boot  
+    from programs.user import __boot
 except: pass
 collect()
 
 try:
-    from programs.stock import __boot  
+    from programs.stock import __boot
 except: pass
 collect()
 
@@ -43,6 +43,14 @@ except:
     button_active = 0
 collect()
 
+try:
+    dsafm/lngl;sa
+    from tg_io import io_audio as audio
+    audio_active = 1
+    audio.mute()
+except:
+    audio_active = 0
+
 from system import handler_uni as handler
 
 import sys_config
@@ -59,15 +67,15 @@ system = holder()
 
 #initial sys_bar setup
 if sys_config.enable_sys_bar:
-    system.add('sys_bar', 
+    system.add('sys_bar',
                     handler.load('sys_bar', path  = 'system.programs',
                     to_system = True, place = 1))
 #handler.cur_cont.place()
 
 ###THE launcher####################################################################################
 #import the inti program (usually launcher to the )
-system.add( home_prog, handler.load( sys_config.home_prog_name, 
-                                                    sys_config.home_prog_path, 
+system.add( home_prog, handler.load( sys_config.home_prog_name,
+                                                    sys_config.home_prog_path,
                                                     not sys_config.home_prog_index))
 
 
@@ -76,24 +84,32 @@ system.add( home_prog, handler.load( sys_config.home_prog_name,
 collect()
 last_sys_refresh = time.monotonic()
 prev_cmds = []
+#audio.unmute()
+#audio.speaker.play_wav('system/audio_files/button_press.wav')
+#while audio.speaker.playing:
+    #pass
+'''if audio_active and not audio.speaker.playing:
+                    audio.speaker.stop()
+                    audio.speaker.play_wav('system/audio_files/looping.wav', loop = True)
+                    button_played = 1'''
 while 1:
     try:
         #print(mem_free())
         collect()
-        
+
         time.sleep(.1)
         if time.monotonic() - last_sys_refresh >= sys_config.system_refresh_interval:
             for process in system:
                 process.container.refresh()
-                
+
             last_sys_refresh = time.monotonic()
-        
+
         if handler.cur_prog.wants_refresh:
             handler.cur_cont.refresh()
-        
+
         #inputed commands
         cmd_list = []
-        
+
         #interpert keyboard as button inputs
         if sys_config.use_keyboard:
             valin = str(input('your cmd(wasd):')).lower()
@@ -101,7 +117,7 @@ while 1:
             if valin == 'EXIT_SYSTEM'.lower():
                 print('atempting exit')
                 break
-            
+
             elif valin[0:5] == 'EXEC_'.lower():
                 exec(valin[5:])
                 continue
@@ -121,19 +137,21 @@ while 1:
                     #time.sleep(.2)
                 #except:
                     #print('err')
-        
+
         #get pressed buttons
         if button_active:
             cmd_list += button.get_commands()
-        
+
         #do touch system refresh here:
         #not implemented!
-        
+        if audio_active:
+            button_played = 0
+
         #interpret commands
         for cmd in cmd_list:
-                if sys_config.use_keyboard: # debug 
+                if sys_config.use_keyboard: # debug
                     print(cmd)
-                if cmd == 'H':  
+                if cmd == 'H':
                     collect()
                     if handler.cur_prog == system.get(home_prog):
                         pass # open app switcher
@@ -145,13 +163,30 @@ while 1:
                         pass
                     else:
                         handler.load(sys_config.settings_prog, sys_config.settings_path)
-                    
+
                 handler.cur_cont.current.command(cmd)
-        
+
+                '''if audio_active:
+                    if not audio.speaker.playing:
+                        audio.speaker.stop()
+                        audio.speaker.play_wav('system/audio_files/button_press.wav')'''
+                    #while audio.speaker.playing:
+                        #time.sleep(.01)
+
+
         #try:handler.unload('example')
         #except: print('dsflkjs')
-        
+
+        '''if audio_active and not audio.speaker.playing:
+            audio.speaker.stop()
+            time.sleep(.05)
+            audio.speaker.play_wav('system/audio_files/looping.wav')'''
+        if audio_active:
+            while audio.speaker.playing:
+                time.sleep(.01)
         del cmd_list
+
+
     except MemoryError:
         print('memory error! this is going to be fixed but currently is not')
         try:

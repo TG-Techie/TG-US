@@ -3,7 +3,7 @@
 #Author: Jonah Yolles-Murphy on Date: 10/12/18
 
 import board, busio, time
-from tg_modules import make_ios as mkio
+from tg_modules import make_ios as ezio
 
 time.sleep(.1)
 #metro m4 express:
@@ -44,9 +44,10 @@ except Exception as e:
     print(e)
 
 try:
-    spkr = board.A1
+    spkr_pin = board.A1
     spkr_en_pin = board.A2
-    spkr_en = mkio.dio(spkr_en_pin, 0)
+    spkr_en = ezio.dio(spkr_en_pin, 0)
+    spkr = ezio.sndio(spkr_pin)
 except Exception as e:
     print('TG:HW: unable to create spkr pins')
     print(e)

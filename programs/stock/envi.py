@@ -15,6 +15,7 @@ bar_width = cont_width
 bar_height = 10
 ####################################################
 def light_updater(funcin, target,start): # takes io_light function and the target text and then returns temp
+    #this takes a target text object and updates it, then return to the valubar the new temp, a two in one!
     tup = funcin()
     #print(tup)
     #print(target.value, type(target.value))
@@ -72,8 +73,8 @@ page1.add(ambi_text = gui.text(cont_x, cur_y,len(ambi_text)*7, increment_val, am
 page1.add(ambi_out = gui.text(cont_x+len(ambi_text)*7, cur_y, cont_width-len(ambi_text)*7, increment_val, ' ' ))
 cur_y += increment_val
 
-page1.add( ambi_bar = gui.value_bar(cont_x,cur_y, bar_width, bar_height, 
-            light_updater, (io_light.get_ambi_brightness, page1.ambi_out, 5), 
+page1.add( ambi_bar = gui.value_bar(cont_x,cur_y, bar_width, bar_height,
+            light_updater, (io_light.get_ambi_brightness, page1.ambi_out, 5),
             max_val = io_light.get_ambi_brightness()[0]*2) )
 cur_y += increment_val
 
@@ -84,7 +85,7 @@ page1.add(vis_text = gui.text(cont_x, cur_y,len(vis_text)*7, increment_val, vis_
 page1.add(vis_out = gui.text(cont_x+len(vis_text)*7, cur_y, cont_width-len(vis_text)*7, increment_val, ' ' ))
 cur_y += increment_val
 
-page1.add( vis_bar = gui.value_bar(cont_x,cur_y, bar_width, bar_height, 
+page1.add( vis_bar = gui.value_bar(cont_x,cur_y, bar_width, bar_height,
             light_updater, (io_light.get_vis_brightness, page1.vis_out, 7),
             max_val = io_light.get_vis_brightness()[0]*2))
 cur_y += increment_val
