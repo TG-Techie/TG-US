@@ -4,7 +4,15 @@
 
 from system.programs.__blank__app import init
 from programs.stock.__tfte_2048 import Tile
+import time
 exec(init)
+
+gui.io.rect(cont_x, cont_y, cont_width, cont_height, color.black)
+gui.io.text(cont_x + 5, cont_y + 5, '''Created by:
+Daniel R.
+Ported by:
+Jonah Y-M''')
+time.sleep(.5)
 
 
 page = container.add_panel()
@@ -62,6 +70,7 @@ def move(direction):
 
 page.add(menu = gui.nidos(cont_x, cont_y + board_height, cont_width, cont_height - board_height, 5, 1))
 
+#setup on screen buttons
 page.menu.of(0,0).text = '<'
 page.menu.of(0,0).set_purpose(move, 'a')
 
@@ -77,9 +86,8 @@ page.menu.of(3,0).set_purpose(move, 'd')
 page.menu.of(4,0).text = 'NuGM'
 page.menu.of(4,0).set_purpose(new_game, ())
 
+
+
+
 #print('making new game')
 new_game(place = 0)
-#print(Tile.is_valid('d'))
-#print(Tile.is_valid('w'))
-#print(Tile.is_valid('s'))
-#print(Tile.is_valid('a'))
