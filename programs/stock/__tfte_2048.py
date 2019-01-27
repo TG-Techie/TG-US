@@ -14,6 +14,11 @@ class Tile:
 
     def __init__(self, value = 0):
         self.value = value
+        Tile.move = Tile._move
+
+    def _show():
+        for i in Tile.array:
+            print(i)
 
     def __repr__(self):
         return str(self.value)
@@ -40,7 +45,7 @@ class Tile:
         #print(Tile.array)
 
     #bring all tiles together in a direction
-    def remove_spaces(direction):
+    '''def remove_spaces(direction):
         if direction == "w":
             for twice in range(2):
                 for column in range(4):
@@ -80,12 +85,19 @@ class Tile:
                             while column - column2 >= 0:
                                 Tile.array[row][(column-column2)+1] = Tile.array[row][column-column2]
                                 Tile.array[row][column-column2] = 0
-                                column2 += 1
-    #add tiles together in a play's (or AI's) turn
-    def move(direction):
+                                column2 += 1'''
+
+
+    def _null(*args, **kwargs):
+        pass
+
+    def move(*args, **kwargs):
+        pass#only for init
+
+    def _move(direction):
         def rotate_coord(x,y,direc, width):
             width -= 1
-            return {'s':(x,y), 'a':(y,width-x), 'w':(width-x,width-y), 'd':(width-y,x) }[direc]
+            return {'d':(x,y), 'w':(y,width-x), 'a':(width-x,width-y), 's':(width-y,x) }[direc]
 
         buffed_array = []
         for x in range(4):
@@ -114,6 +126,7 @@ class Tile:
                 if row[pos_num] == row[pos_num-1]:
                     row[pos_num] *= 2
                     row[pos_num-1] = 0
+                    Tile.score += row[pos_num]
 
         for row in buffed_array:
             out = []
@@ -124,13 +137,24 @@ class Tile:
                 out = [0] + out
             buffed_array[buffed_array.index(row)] = out
 
+        is_same = True
+        for x in range(4):
+            for y in range(4):
+                buf_coords = rotate_coord(x,y,direction,4)
+                if Tile.array[x][y].value == buffed_array[buf_coords[0]][buf_coords[1]]:
+                    pass
+                else:
+                    is_same = False
+
+
         #push to Tile
         for x in range(4):
             for y in range(4):
                 buf_coords = rotate_coord(x,y,direction,4)
                 Tile.array[x][y].value = buffed_array[buf_coords[0]][buf_coords[1]]
 
-        Tile.new()
+        if not is_same:
+            Tile.new()
 
 
 
@@ -206,14 +230,45 @@ class Tile:
 
     #clears the board and starts a new game
     def new_game():
+        Tile.move = Tile._move
         Tile.fill()
         Tile.new()
         Tile.new()
 
-    def is_valid(direction):
+    '''def is_valid(direction):
+        buffed_array = []
+        for x in range(4):
+            buffed_array.append([])
+            for i in range(4):
+                buffed_array[x].append(0)
+
+        for x in range(4):
+            for y in range(4):
+                #new_coord = rotate_coord(x, y, direction, 4)
+                #print(x,y,new_coord)
+                buffed_array[x][y] = (Tile.array[x][y].value)
+
+        #lock
+        for row_num in range(4):
+            buffed_array[row_num] = tuple(buffed_array[row_num])
+        buffed_array = tuple(buffed_array)
+
+        print(' tile ')
+        Tile._show()
+
+        print(' locked buffed ')
+        for i in buffed_array:
+            print(i)
+
+        Tile.move(direction)
+        print(' moved tile ')'''
+
+
+    '''def is_valid(direction):
         def rotate_coord(x,y,direc, width):
             width -= 1
-            return {'d':(x,y), 's':(y,width-x), 'a':(width-x,width-y), 'w':(width-y,x) }[direc]
+            #sawd
+            return {'d':(x,y), 'w':(y,width-x), 'a':(width-x,width-y), 's':(width-y,x) }[direc]
 
         buffed_array = []
         for x in range(4):
@@ -225,7 +280,9 @@ class Tile:
             for y in range(4):
                 new_coord = rotate_coord(x, y, direction, 4)
                 #print(x,y,new_coord)
-                buffed_array[new_coord[0]][new_coord[1]] = (Tile.array[x][y].value)
+                buffed_array[x][y] = (Tile.array[new_coord[0]][new_coord[1]].value)
+
+
 
         for row in buffed_array:
             out = []
@@ -236,18 +293,20 @@ class Tile:
                 out = [0] + out
             buffed_array[buffed_array.index(row)] = out
 
+
+
         is_same = True
         for x in range(4):
             for y in range(4):
                 if not buffed_array[x][y] == Tile.array[x][y].value:
                     is_same = False
 
-        return not is_same
+        return not is_same'''
 
 
 
     #test to see if the game is over
-    def game_over():
+    '''def game_over():
         #temp_array = copy.deepcopy(Tile.array)
         #temp_score = copy.copy(Tile.score)
         temp_array = tuple(Tile.array)
@@ -255,4 +314,46 @@ class Tile:
         if Tile.is_valid("w") == False and Tile.is_valid("a") == False and Tile.is_valid("s") == False and Tile.is_valid("d") == False:
             return True
         else:
-            return False
+            return False'''
+
+    def game_over():
+
+        can_move = False
+        for x in range(1,4):
+            for y in range(1,4):
+                #print(x,y)
+                try:
+                    if Tile.array[x][y].value == Tile.array[x+1][y].value:
+                        can_move = True
+                    #print( x+1, y, Tile.array[x][y].value == Tile.array[x+1][y].value)
+                except:
+                    pass
+                    #print('failed', x+1 , y)
+
+                try:
+                    if Tile.array[x][y].value == Tile.array[x-1][y].value:
+                        can_move = True
+                    #print( x-1, y, Tile.array[x][y].value == Tile.array[x-1][y].value)
+                except:
+                    pass
+                    #print('failed', x-1 , y)
+
+                try:
+                    if Tile.array[x][y].value == Tile.array[x][y+1].value:
+                        can_move = True
+                    #print( x, y+1, Tile.array[x][y].value == Tile.array[x][y+1].value)
+                except:
+                    pass
+                    #print('failed', x , y+1)
+
+                try:
+                    if Tile.array[x][y].value == Tile.array[x][y-1].value:
+                        can_move = True
+                    #print( x, y-1, Tile.array[x][y].value == Tile.array[x][y-1].value)
+                except:
+                    pass
+                    #print('failed', x , y-1)
+                #print('-----')
+        if not can_move:
+            Tile.move = Tile._null
+        return not can_move

@@ -21,6 +21,8 @@ for i in num_to_color:
 
 page.add(board = gui.nidos(cont_x, cont_y, board_height, board_height, 4,4))
 page.board.of(0,0).deselect()
+page.add( score_label = gui.text(cont_x+board_height, cont_y + 5, cont_width - board_height, 15, 'Score:'))
+page.add( score = gui.text(cont_x+board_height, cont_y + 20, cont_width - board_height, 20, '', border = 2))
 
 def place_board(place = 1):
     for i in range(4):
@@ -28,21 +30,30 @@ def place_board(place = 1):
         #print(tfte.Tile.array[i])
         for j in range(4):
             pointer = page.board.of(i,j)
-            number = Tile.array[i][j].value
+            number = Tile.array[j][i].value
             pointer.active = False
             pointer.text = str(number)
             pointer.color = num_to_color[number]
-            if place:
-                pointer.place()
-
+            #if place:
+                #pointer.place()
+    if place:
+        for i in page.board.contents:
+            i.place()
 
 def new_game(place = 1):
     Tile.new_game()
     place_board(place)
 
 def move(direction):
-    Tile.move(direction)
-    place_board()
+    if not Tile.game_over():
+        Tile.move(direction)
+        place_board()
+
+    else:
+        for i in range(8):
+            page.board.contents[i].text = str('GameOver'[1])
+    page.score.value = str(Tile.score)
+    print(Tile.score)
 
 
 
@@ -68,7 +79,7 @@ page.menu.of(4,0).set_purpose(new_game, ())
 
 #print('making new game')
 new_game(place = 0)
-print(Tile.is_valid('d'))
-print(Tile.is_valid('w'))
-print(Tile.is_valid('s'))
-print(Tile.is_valid('a'))
+#print(Tile.is_valid('d'))
+#print(Tile.is_valid('w'))
+#print(Tile.is_valid('s'))
+#print(Tile.is_valid('a'))
