@@ -18,8 +18,10 @@ class Tile:
     def __repr__(self):
         return str(self.value)
 
-    def __eq__(self, other):
-        return bool(self == other)
+    '''def __eq__(self, other):
+        self = int(self)
+        other = int(other)
+        return self == other'''
 
     def __add__(self, other):
         temp_self = int(self)
@@ -33,6 +35,7 @@ class Tile:
     def fill():
         for i in range(4):
             for j in range(4):
+                #print(i,j)
                 Tile.array[i][j] = Tile()
         #print(Tile.array)
 
@@ -80,8 +83,73 @@ class Tile:
                                 column2 += 1
     #add tiles together in a play's (or AI's) turn
     def move(direction):
+        def rotate_coord(x,y,direc, width):
+            width -= 1
+            return {'s':(x,y), 'a':(y,width-x), 'w':(width-x,width-y), 'd':(width-y,x) }[direc]
+
+        buffed_array = []
+        for x in range(4):
+            buffed_array.append([])
+            for i in range(4):
+                buffed_array[x].append(0)
+
+        for x in range(4):
+            for y in range(4):
+                new_coord = rotate_coord(x, y, direction, 4)
+                #print(x,y,new_coord)
+                buffed_array[new_coord[0]][new_coord[1]] = (Tile.array[x][y].value)
+
+        for row in buffed_array:
+            out = []
+            for i in row:
+                if i:
+                    out.append(i)
+            while len(out) < 4:
+                out = [0] + out
+            buffed_array[buffed_array.index(row)] = out
+
+        for row_num in range(4):
+            row = buffed_array[row_num]
+            for pos_num in reversed(range(1,4)):
+                if row[pos_num] == row[pos_num-1]:
+                    row[pos_num] *= 2
+                    row[pos_num-1] = 0
+
+        for row in buffed_array:
+            out = []
+            for i in row:
+                if i:
+                    out.append(i)
+            while len(out) < 4:
+                out = [0] + out
+            buffed_array[buffed_array.index(row)] = out
+
+        #push to Tile
+        for x in range(4):
+            for y in range(4):
+                buf_coords = rotate_coord(x,y,direction,4)
+                Tile.array[x][y].value = buffed_array[buf_coords[0]][buf_coords[1]]
+
+        Tile.new()
+
+
+
+    """def move(direction):
+        print('move entered', direction)
         #temp_array = copy.deepcopy(Tile.array)
+
+        '''
         temp_array = tuple(Tile.array)
+        print(Tile.array)
+        print(temp_array)'''
+        #buffed_array = []
+        for x in range(4):
+            buffed_array.append([])
+            for y in range(4):
+                buffed_array[x].append(Tile.array[x][y])
+            buffed_array[x] = tuple(buffed_array[x])
+        buffed_array = tuple(buffed_array)
+
         if direction == "w":
             Tile.remove_spaces("w")
             for column in range(4):
@@ -118,23 +186,17 @@ class Tile:
                         Tile.score += int(Tile.array[row][column]) + int(Tile.array[row][column-1])
                         Tile.array[row][column] = int(Tile.array[row][column]) + int(Tile.array[row][column-1])
                         Tile.array[row][column-1] = 0
-            Tile.remove_spaces("d")
+            Tile.remove_spaces("d")"""
 
-        if temp_array == Tile.array:
-            return False
-        else:
-            #print("Safe move")
-            return True
     #places new tiles randomly in array
     def new():
-        #print("new called")
-        x = random.randint(0,3)
-        y = random.randint(0,3)
-        #while not int(Tile.array[y][x]) == 0:
-        while not (Tile.array[y][x]) == 0:
+        while 1:
             x = random.randint(0,3)
             y = random.randint(0,3)
-            #print(x, " ", y)
+            #print((Tile.array[y][x]))
+            #print(type((Tile.array[y][x])))
+            if not Tile.array[y][x].value:
+                break
         value = random.randint(0,9)
         if value == 0:
             value = 4
@@ -149,18 +211,40 @@ class Tile:
         Tile.new()
 
     def is_valid(direction):
-        #temp_array = copy.deepcopy(Tile.array)
-        #temp_score = copy.copy(Tile.score)
-        temp_array = tuple(Tile.array)
-        temp_score = (Tile.score)
-        if Tile.move(direction):
-            Tile.score = temp_score
-            Tile.array = temp_array
-            return True
-        else:
-            Tile.score = temp_score
-            Tile.array = temp_array
-            return False
+        def rotate_coord(x,y,direc, width):
+            width -= 1
+            return {'d':(x,y), 's':(y,width-x), 'a':(width-x,width-y), 'w':(width-y,x) }[direc]
+
+        buffed_array = []
+        for x in range(4):
+            buffed_array.append([])
+            for i in range(4):
+                buffed_array[x].append(0)
+
+        for x in range(4):
+            for y in range(4):
+                new_coord = rotate_coord(x, y, direction, 4)
+                #print(x,y,new_coord)
+                buffed_array[new_coord[0]][new_coord[1]] = (Tile.array[x][y].value)
+
+        for row in buffed_array:
+            out = []
+            for i in row:
+                if i:
+                    out.append(i)
+            while len(out) < 4:
+                out = [0] + out
+            buffed_array[buffed_array.index(row)] = out
+
+        is_same = True
+        for x in range(4):
+            for y in range(4):
+                if not buffed_array[x][y] == Tile.array[x][y].value:
+                    is_same = False
+
+        return not is_same
+
+
 
     #test to see if the game is over
     def game_over():

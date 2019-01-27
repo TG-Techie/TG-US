@@ -3,6 +3,7 @@
 #Author: Jonah Yolles-Murphy on Date: 10/17/18
 
 import supervisor
+from tg_io.io_screen import disp
 
 enable_sys_bar = 1
 enable_nav_bar = 0
@@ -23,10 +24,24 @@ settings_path = 'system.programs'
 
 prog_path = 'programs.user'
 
-system_refresh_interval = 3
+system_refresh_interval = 20
 
-if supervisor.runtime.serial_connected:
-    use_keyboard = bool(input('use keybaord as input?(1 or 0):'))
+
+usb_connected = supervisor.runtime.serial_connected
+
+#check if should use keyboard
+if usb_connected:
+    disp.text(10,10,'''answer
+query over
+serial port''',size = 2)
+    valin = input('use keybaord as input?(yes or no):').lower()
+    if 'y' in valin:
+        use_keyboard = 1
+        print('using keyboard')
+    else:
+        use_keyboard = 0
+        print('not using keyboard')
+    disp.fill(0)
 else:
     use_keyboard = 0
 
