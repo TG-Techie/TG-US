@@ -4,29 +4,43 @@
 
 from system.programs.__blank__app import gui, cont_x, cont_y, cont_width, cont_height, collect
 
-global pop_up
+global pop_up, last_target
 
-def return_to_parent(target):
+def return_to_parent(target, place = True):
     global pop_up
     #remove the panel from the target
     #target.contents.pop(target.contents.index(target.nav))
     #del target.pop
 
+    print(target.contents)
+    target.contents.pop(0)
+    print(target.contents)
+
+
     #make the target's nav the recent-most navigable gui_obj
     for obj in reversed(target.contents):
         if obj.is_navigable:
-            target.nav = obj
-            break
-
+            target._nav = obj
+            #break
+    print(target._nav)
     pop_up.yes_no.of(0,0).set_purpose(print,('TG:POP_UP: "BridgeKeeper: Who would cross the bridge of death must answer me these questions three ere the other side he see"',))
 
-    target.place()
+    if place:
+        target.place()
+
+class pop_panel(gui.panel):
+
+    def clear(self):
+        return_to_parent(last_target, place = False)
+        #print('!!!!!!')
+        super().clear()
 
 #shape define
 width17 = (cont_width/11)
 height15 = (cont_height/9)
+
 #setup the yes_no restart panel
-pop_up = gui.panel(int(cont_x + width17), int(cont_y + height15),
+pop_up = pop_panel(int(cont_x + width17), int(cont_y + height15),
                     int(cont_width - width17*2), int(cont_height - height15*2), background = gui.io.blue)
 
 pop_up.add( rect = gui.rect(int(cont_x + width17), int(cont_y + height15),
@@ -51,7 +65,8 @@ pop_up.yes_no.of(1,0).set_purpose(return_to_parent, (None))
 pop_up.yes_no.of(1,0).text = 'NO'
 
 def summon(target, yes_func, yes_tup, message, but1_text = 'YES', but2_text = 'NO'):
-    global pop_up,return_to_parent
+    global pop_up,return_to_parent, last_target
+    last_target = target
 
     #set message
     pop_up.text.value = message
@@ -64,6 +79,7 @@ def summon(target, yes_func, yes_tup, message, but1_text = 'YES', but2_text = 'N
 
     #target.add( pop = pop_up)
     target._nav = pop_up.nav
+    target.contents.insert(0,pop_up)
     #print(pop_up.nav, target.nav)
     target._overwrite_cmd_dict()
     pop_up.place()

@@ -2,6 +2,8 @@
 #Attribution-NonCommercial 3.0 United States (CC BY-NC 3.0 US)
 #Author: Jonah Yolles-Murphy on Date: 10/17/18
 
+import supervisor
+
 enable_sys_bar = 1
 enable_nav_bar = 0
 
@@ -23,7 +25,10 @@ prog_path = 'programs.user'
 
 system_refresh_interval = 3
 
-use_keyboard = 0
+if supervisor.runtime.serial_connected:
+    use_keyboard = bool(input('use keybaord as input?(1 or 0):'))
+else:
+    use_keyboard = 0
 
 DEBUG_module_locaiton_output = 1
 

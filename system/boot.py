@@ -5,11 +5,13 @@
 #print(__name__)
 
 import time
+from tg_io import io_button as buttons
 from tg_io.io_screen import disp
 from tg_io.staging.pin_port import spkr_en, spkr
 
-spkr_en.value = 1
-spkr.play_wav('system/audio_files/looping.wav')
+'''if not 'S' in buttons.get_commands():
+    spkr_en.value = 1
+    spkr.play_wav('system/audio_files/looping.wav')'''
 
 disp.text(0,6*8,'''--------
 TG-US Version: ''' + str(0)+'''
