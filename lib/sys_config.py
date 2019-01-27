@@ -30,12 +30,12 @@ system_refresh_interval = 20
 usb_connected = supervisor.runtime.serial_connected
 
 #check if should use keyboard
-if usb_connected:
+if usb_connected :
     disp.text(10,10,'''answer
 query over
 serial port''',size = 2)
-    valin = input('use keybaord as input?(yes or no):').lower()
-    if 'y' in valin:
+    valin = str(input('use keybaord as input?(yes or no):')).lower()
+    if ('y'  in valin) or ( '1' in valin):
         use_keyboard = 1
         print('using keyboard')
     else:

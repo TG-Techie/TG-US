@@ -6,7 +6,7 @@
 
 import time
 import sys_config
-from tg_io import io_button as buttons
+from tg_io import io_button as button
 from tg_io.io_screen import disp
 from tg_io.staging.pin_port import spkr_en, spkr
 
@@ -15,7 +15,7 @@ from tg_io.staging.pin_port import spkr_en, spkr
 
 spkr_en.value = 0
 
-if not sys_config.usb_connected:
+if (not sys_config.usb_connected) and (not 'H' in button.get_commands()):
     spkr_en.value = 1
     spkr.play_wav('system/audio_files/looping.wav')
 

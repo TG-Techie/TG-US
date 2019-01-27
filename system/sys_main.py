@@ -117,26 +117,31 @@ while 1:
             if valin == 'EXIT_SYSTEM'.lower():
                 print('atempting exit')
                 break
-
+            #print(valin[0:2])
+            if valin[0:2] == 'F '.lower():
+                valin = valin[2:].split()
+                for i in range(len(valin)):
+                    valin[i] = 'F'+valin[i]
             elif valin[0:5] == 'EXEC_'.lower():
                 exec(valin[5:])
                 continue
             elif valin == 'keyboard_off':
                 sys_config.use_keyboard = 0
                 print('turned off')
+            print(valin)
             for cmd in valin:
                 #print(cmd)
                 #try:
-                    if cmd == 'h':
-                        collect()
-                        handler.load(home_prog)
-                    try:
-                        cmd_list.append({'w':'^', 'a':'<', 's':'V', 'd':'>', 'e':'E', 'p':'S'}[cmd[0]])
-                    except:
-                        cmd_list.append(cmd[0])
-                    #time.sleep(.2)
+                if cmd == 'h':
+                    collect()
+                    handler.load(home_prog)
+                try:
+                    cmd_list.append({'w':'^', 'a':'<', 's':'V', 'd':'>', 'e':'E', 'p':'S'}[cmd[0]])
+                except:
+                    cmd_list.append(cmd)
+                #time.sleep(.2)
                 #except:
-                    #print('err')
+                #print('err')
 
         #get pressed buttons
         if button_active:

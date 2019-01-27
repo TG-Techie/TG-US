@@ -230,6 +230,7 @@ class Tile:
 
     #clears the board and starts a new game
     def new_game():
+        Tile.score = 0
         Tile.move = Tile._move
         Tile.fill()
         Tile.new()

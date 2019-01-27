@@ -13,7 +13,10 @@ cap1.reset()
 #hardware specific code
 num2cmd_dict = { 3 : '<', 4:'E', 5:'>', 6:'H', 2:'S' , 16 : 'SPKR', 17 : 'EMRG', 12: 'F4', 23:'F5', 22:'F6', 21:'F7'}
 
+reset_counter = 0
+reset_num = 13
 def get_commands(debug = False):
+    global reset_counter
     #print(cap1.touched())
     #returning a list of cmds
     out_list = []
@@ -22,6 +25,11 @@ def get_commands(debug = False):
     #cap0.reset()
     time.sleep(.005)
     data = (cap0.touched() )+ (cap1.touched()<<12)
+    reset_counter +=1
+    if reset_counter == reset_num:
+        cap0.reset()
+        cap1.reset()
+        reset_counter = 0
     if data:
         for shifter in range(24):
             if 1<<shifter & data:

@@ -48,6 +48,7 @@ def place_board(place = 1, force = False):
     if place:
         for i in page.board.contents:
             i.place()
+    page.score.value = str(Tile.score)
 
 def new_game(place = 1, force = False):
     Tile.new_game()
@@ -61,8 +62,7 @@ def move(direction):
     else:
         for i in range(8):
             page.board.contents[i].text = str('GameOver'[1])
-    page.score.value = str(Tile.score)
-    print(Tile.score)
+    #print(Tile.score)
 
 page.add(menu = gui.nidos(cont_x, cont_y + board_height, cont_width, cont_height - board_height, 5, 1))
 
@@ -88,14 +88,14 @@ for cmd in num2cmd_dict:
     if 'F' in num2cmd_dict[cmd]:
         possib_Fs.append(num2cmd_dict[cmd].replace('F',''))
 possib_Fs.sort()
-print(possib_Fs)
+#print(possib_Fs)
 
 Fkey_text = """"""
 for i in range(4):
     try:
         num = possib_Fs.pop(0)
-        page.cmd_dict['F'+num] = ((move, 'w'),(move, 's'),(move, 'a'),(move, 'd'))[i]
-        Fkey_text += ('^','V','<','>')[i] + '=F'+num+'\n'
+        page.cmd_dict['F'+num] = ((move, 'a'),(move, 'w'),(move, 's'),(move, 'd'))[i]
+        Fkey_text += ('<','^','V','>')[i] + '=F'+num+'\n'
     except:
         pass
 
