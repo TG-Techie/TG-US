@@ -141,6 +141,7 @@ while 1:
         #get pressed buttons
         if button_active:
             cmd_list += button.get_commands()
+            #print(cmd_list)
 
         #do touch system refresh here:
         #not implemented!

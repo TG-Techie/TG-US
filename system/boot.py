@@ -10,8 +10,8 @@ from tg_io import io_button as buttons
 from tg_io.io_screen import disp
 from tg_io.staging.pin_port import spkr_en, spkr
 
-sys_config.home_prog_path = 'programs.stock'
-sys_config.home_prog_name = '_SPC2048_SPC'
+#sys_config.home_prog_path = 'programs.stock'
+#sys_config.home_prog_name = '_SPC2048_SPC'
 
 spkr_en.value = 0
 

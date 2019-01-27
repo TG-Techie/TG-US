@@ -3,13 +3,16 @@
 #adaption date: 012619
 
 from system.programs.__blank__app import init
+from tg_io.io_button import num2cmd_dict
 from programs.stock.__tfte_2048 import Tile
 import time
 exec(init)
 
 gui.io.rect(cont_x, cont_y, cont_width, cont_height, color.black)
-gui.io.text(cont_x + 5, cont_y + 5, '''Created by:
+gui.io.text(cont_x + 5, cont_y + 5, '''
+Created by:
 Daniel R.
+
 Ported by:
 Jonah Y-M''')
 time.sleep(.5)
@@ -32,10 +35,8 @@ page.board.of(0,0).deselect()
 page.add( score_label = gui.text(cont_x+board_height, cont_y + 5, cont_width - board_height, 15, 'Score:'))
 page.add( score = gui.text(cont_x+board_height, cont_y + 20, cont_width - board_height, 20, '', border = 2))
 
-def place_board(place = 1):
+def place_board(place = 1, force = False):
     for i in range(4):
-        #print(i)
-        #print(tfte.Tile.array[i])
         for j in range(4):
             pointer = page.board.of(i,j)
             number = Tile.array[j][i].value
@@ -48,9 +49,9 @@ def place_board(place = 1):
         for i in page.board.contents:
             i.place()
 
-def new_game(place = 1):
+def new_game(place = 1, force = False):
     Tile.new_game()
-    place_board(place)
+    place_board(place,force)
 
 def move(direction):
     if not Tile.game_over():
@@ -62,11 +63,6 @@ def move(direction):
             page.board.contents[i].text = str('GameOver'[1])
     page.score.value = str(Tile.score)
     print(Tile.score)
-
-
-
-
-
 
 page.add(menu = gui.nidos(cont_x, cont_y + board_height, cont_width, cont_height - board_height, 5, 1))
 
@@ -86,8 +82,24 @@ page.menu.of(3,0).set_purpose(move, 'd')
 page.menu.of(4,0).text = 'NuGM'
 page.menu.of(4,0).set_purpose(new_game, ())
 
+#set up hrdware buttons if possible
+possib_Fs = []
+for cmd in num2cmd_dict:
+    if 'F' in num2cmd_dict[cmd]:
+        possib_Fs.append(num2cmd_dict[cmd].replace('F',''))
+possib_Fs.sort()
+print(possib_Fs)
+
+Fkey_text = """"""
+for i in range(4):
+    try:
+        num = possib_Fs.pop(0)
+        page.cmd_dict['F'+num] = ((move, 'w'),(move, 's'),(move, 'a'),(move, 'd'))[i]
+        Fkey_text += ('^','V','<','>')[i] + '=F'+num+'\n'
+    except:
+        pass
+
+page.add(func_text = gui.text(cont_x+board_height, cont_y + 50, cont_width - board_height, 40, Fkey_text))
 
 
-
-#print('making new game')
-new_game(place = 0)
+new_game(place = 0, force = True)
